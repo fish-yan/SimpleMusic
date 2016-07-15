@@ -11,4 +11,9 @@ import UIKit
 class MusicListReusableView: UICollectionReusableView {
         
     @IBOutlet weak var typeBtn: UIButton!
+    
+    override func awakeFromNib() {
+        typeBtn.layer.borderColor = UIColor.lightGrayColor().CGColor
+        typeBtn.layer.borderWidth = 1
+    }
 }

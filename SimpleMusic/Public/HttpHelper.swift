@@ -12,7 +12,7 @@ class HttpHelper: NSObject {
     static let shareHelper = HttpHelper()
     var manager = AFHTTPSessionManager()
     
-    func loadData(withView view: UIView, url: String, parameters: AnyObject?, success: ((response: AnyObject?) -> Void)) {
+    func loadData(withView view: UIView?, url: String, parameters: AnyObject?, success: ((response: AnyObject?) -> Void)) {
         let task = manager.GET(url, parameters: parameters, progress: nil, success: { (dataTask, response) in
             print("\(url) \n \(response)")
             let code = response!["code"] as! NSNumber
@@ -21,12 +21,18 @@ class HttpHelper: NSObject {
                 if view is UITableView {
                     let tableView = view as! UITableView
                     tableView.reloadData()
+                    if (tableView.mj_header != nil) {
+                        tableView.mj_header.endRefreshing()
+                        tableView.mj_footer.endRefreshing()
+                    }
                 }
                 if (view is UICollectionView) {
                     let collectionView = view as! UICollectionView
                     collectionView.reloadData()
-                    collectionView.mj_header.endRefreshing()
-                    collectionView.mj_footer.endRefreshing()
+                    if (collectionView.mj_header != nil) {
+                        collectionView.mj_header.endRefreshing()
+                        collectionView.mj_footer.endRefreshing()
+                    }
                 }
                 print(view is UICollectionView)
             }

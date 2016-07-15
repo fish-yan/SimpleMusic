@@ -18,7 +18,8 @@ class MusicPlayerView: UIView {
     @IBOutlet weak var topPlayerBtn: UIButton!
     @IBOutlet weak var musicTitleLab: UILabel!
     @IBOutlet weak var musicImageView: UIImageView!
-    var minY:CGFloat = kScreenHeight - 50
+    @IBOutlet weak var navHeightMargin: NSLayoutConstraint!
+    var minY:CGFloat = kScreenHeight - 44
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -43,8 +44,9 @@ class MusicPlayerView: UIView {
     func configureView() {
         UIView.animateWithDuration(0.25) { 
             self.frame = CGRect(x: 0, y: self.minY, width: kScreenWidth, height: kScreenHeight)
+            self.layoutIfNeeded()
         }
-        if minY == kScreenHeight - 50 {
+        if minY == kScreenHeight - 44 {
             backBtn.hidden = true
             topPlayerBtn.hidden = false
             musicTitleLab.textAlignment = .Left
@@ -70,14 +72,16 @@ class MusicPlayerView: UIView {
     
     @IBAction func backBtnAction(sender: UIButton) {
         if minY == 0 {
-            minY = kScreenHeight - 50
+            minY = kScreenHeight - 44
+            navHeightMargin.constant = 44
             configureView()
         }
     }
     
     func tapGestureAction(sender: UITapGestureRecognizer) {
-        if minY == kScreenHeight - 50 {
+        if minY == kScreenHeight - 44 {
             minY = 0
+            navHeightMargin.constant = 64
             configureView()
         }
     }

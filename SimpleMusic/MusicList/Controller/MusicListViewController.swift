@@ -13,6 +13,7 @@ class MusicListViewController: UIViewController {
     
     var dataArray = NSMutableArray()
     var pageIndex: NSInteger = 1
+    var type = "全部"
     override func viewDidLoad() {
         super.viewDidLoad()
         collectionView.mj_header = MJRefreshNormalHeader(refreshingBlock: { 
@@ -25,27 +26,24 @@ class MusicListViewController: UIViewController {
         })
         collectionView.mj_header.beginRefreshing()
     }
-
-    @IBAction func musicTypeBtnAction(sender: UIButton) {
-        
-    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
     
-
-    /*
     // MARK: - Navigation
 
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        // Get the new view controller using segue.destinationViewController.
-        // Pass the selected object to the new view controller.
+        if segue.identifier == "type" {
+            let presentVC = segue.destinationViewController as! MusicTypeViewController
+            presentVC.passType = {(passType) in
+                self.type = passType!
+                self.collectionView.mj_header.beginRefreshing()
+            }
+        }
     }
-    */
-
+    
 }
 
 // MARK: - UICollectionViewDataSource
@@ -70,7 +68,7 @@ extension MusicListViewController: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, atIndexPath indexPath: NSIndexPath) -> UICollectionReusableView {
         let reusableView = collectionView.dequeueReusableSupplementaryViewOfKind(UICollectionElementKindSectionHeader, withReuseIdentifier: "MusicListReusableView", forIndexPath: indexPath) as! MusicListReusableView
-        
+        reusableView.typeBtn.setTitle(type, forState: .Normal)
         return reusableView
     }
     
@@ -100,12 +98,19 @@ extension MusicListViewController: UICollectionViewDelegate {
 
 extension MusicListViewController {
     func getMusicList() {
-        let url = "http://search.dongting.com/songlist/search?q=tag:%E6%9C%80%E7%83%AD"
-        let str = "最热"
-        str.stringByAddingPercentEscapesUsingEncoding(NSUTF8StringEncoding)
-        let parameters = ["size":"10", "page":"\(pageIndex)"]
+        let url = "http://search.dongting.com/songlist/search?"
+        var str = ""
+        if type == "全部" {
+            str = ""
+        }else{
+            str = "|" + type
+        }
+        let parameters = ["size":"10", "page":"\(pageIndex)", "q":"tag:最热\(str)"]
         HttpHelper.shareHelper.loadData(withView: collectionView, url: url, parameters: parameters) { (response) in
             let data = response!["data"] as! NSArray
+            if self.pageIndex == 1 {
+                self.dataArray = NSMutableArray()
+            }
             for dict in data {
                 let model = MusicListModel()
                 model.setValuesForKeysWithDictionary(dict as! [String : AnyObject])
