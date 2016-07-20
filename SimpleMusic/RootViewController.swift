@@ -15,6 +15,7 @@ class RootViewController: UIViewController {
     @IBOutlet weak var scrollView: UIScrollView!
     override func viewDidLoad() {
         super.viewDidLoad()
+        navigationController?.interactivePopGestureRecognizer?.delegate = self
         let playerView = MusicPlayerView(frame: CGRect(x: 0, y: kScreenHeight - 50, width: kScreenWidth, height: kScreenHeight))
         navigationController?.view.addSubview(playerView)
         // Do any additional setup after loading the view.
@@ -52,4 +53,15 @@ extension RootViewController: UIScrollViewDelegate{
         lineLeftMargin.constant = scrollView.contentOffset.x / (kScreenWidth * 3) * 210
     }
     
+}
+
+// MARK: - UIGestureRecognizerDelegate
+
+extension RootViewController: UIGestureRecognizerDelegate {
+    func gestureRecognizerShouldBegin(gestureRecognizer: UIGestureRecognizer) -> Bool {
+        if navigationController?.viewControllers.count == 1 {
+            return false
+        }
+        return true
+    }
 }

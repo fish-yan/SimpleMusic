@@ -9,6 +9,7 @@
 #import "UIImageView+WebCache.h"
 #import "MJRefresh.h"
 
+
 #ifndef SimpleMusic_h
 #define SimpleMusic_h
 

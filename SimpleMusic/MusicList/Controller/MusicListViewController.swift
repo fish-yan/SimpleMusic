@@ -60,9 +60,9 @@ extension MusicListViewController: UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MusicListCell", forIndexPath: indexPath) as! MusicListCell
-        let model = dataArray[indexPath.row] as? MusicListModel
-        cell.musicImageView.sd_setImageWithURL(NSURL(string: (model?.pic_url)!))
-        cell.musicTitleLab.text = model?.title
+        let model = dataArray[indexPath.row] as! MusicModel
+        cell.musicImageView.sd_setImageWithURL(NSURL(string: model.picUrl))
+        cell.musicTitleLab.text = model.title
         return cell
     }
     
@@ -112,7 +112,7 @@ extension MusicListViewController {
                 self.dataArray = NSMutableArray()
             }
             for dict in data {
-                let model = MusicListModel()
+                let model = MusicModel()
                 model.setValuesForKeysWithDictionary(dict as! [String : AnyObject])
                 self.dataArray.addObject(model)
             }

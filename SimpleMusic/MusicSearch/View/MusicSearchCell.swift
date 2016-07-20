@@ -11,6 +11,7 @@ import UIKit
 class MusicSearchCell: UITableViewCell {
     @IBOutlet weak var indexLab: UILabel!
 
+    @IBOutlet weak var picImage: UIImageView!
     @IBOutlet weak var favBtn: UIButton!
     @IBOutlet weak var singerNameLab: UILabel!
     @IBOutlet weak var titleLab: UILabel!
