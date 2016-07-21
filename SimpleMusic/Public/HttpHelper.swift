@@ -11,6 +11,9 @@ import UIKit
 class HttpHelper: NSObject {
     static let shareHelper = HttpHelper()
     var manager = AFHTTPSessionManager()
+    override init() {
+        manager.responseSerializer.acceptableContentTypes = NSSet(objects: "application/json", "text/plain", "text/html") as? Set<String>
+    }
     
     func loadData(withView view: UIView?, url: String, parameters: AnyObject?, success: ((response: AnyObject?) -> Void)) {
         let task = manager.GET(url, parameters: parameters, progress: nil, success: { (dataTask, response) in

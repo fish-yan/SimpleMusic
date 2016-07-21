@@ -89,7 +89,8 @@ extension MusicListViewController: UICollectionViewDelegateFlowLayout {
 extension MusicListViewController: UICollectionViewDelegate {
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        
+        let model = dataArray[indexPath.row] as! MusicModel
+        MusicPlayerView.sharePlayer.loadMusicWith(model.songs, index: 0)
     }
     
 }
@@ -98,7 +99,7 @@ extension MusicListViewController: UICollectionViewDelegate {
 
 extension MusicListViewController {
     func getMusicList() {
-        let url = "http://search.dongting.com/songlist/search?"
+        let url = "http://search.dongting.com/songlist/search"
         var str = ""
         if type == "全部" {
             str = ""

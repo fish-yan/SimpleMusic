@@ -19,8 +19,10 @@ class MusicModel: NSObject {
     var picUrl: String! // 图片url
     var songListId: NSNumber! // 歌单id
     var songs: NSArray! // 歌曲id数组
-    var album_num: NSNumber!
-    var song_num: NSNumber!
+    var albumName: String! //专辑名称
+    var album_num: NSNumber! // 专辑数量
+    var albumId: NSNumber! // 专辑id
+    var song_num: NSNumber! // 歌曲数量
     override func setValue(value: AnyObject?, forUndefinedKey key: String) {
         
         if key == "llList" {

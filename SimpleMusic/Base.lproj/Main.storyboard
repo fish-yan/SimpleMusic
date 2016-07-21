@@ -471,7 +471,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="64" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Aan-e1-vcJ">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="524"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <inset key="separatorInset" minX="10" minY="0.0" maxX="10" maxY="0.0"/>
                                 <prototypes>
@@ -483,7 +483,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="7bo-Gc-rj4">
-                                                    <rect key="frame" x="60" y="5" width="36" height="17"/>
+                                                    <rect key="frame" x="60" y="5" width="200" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -527,6 +527,7 @@
                                                 <constraint firstItem="7bo-Gc-rj4" firstAttribute="top" secondItem="teG-js-SLw" secondAttribute="top" constant="5" id="Rwe-Wb-GQR"/>
                                                 <constraint firstItem="7bo-Gc-rj4" firstAttribute="leading" secondItem="3DU-xR-qS8" secondAttribute="trailing" constant="10" id="S98-7E-wMC"/>
                                                 <constraint firstItem="3DU-xR-qS8" firstAttribute="centerY" secondItem="teG-js-SLw" secondAttribute="centerY" id="UFS-SZ-gmr"/>
+                                                <constraint firstItem="EQB-FW-XNc" firstAttribute="leading" secondItem="7bo-Gc-rj4" secondAttribute="trailing" constant="10" id="cBr-B2-uGs"/>
                                                 <constraint firstAttribute="bottom" secondItem="eZC-ih-gTN" secondAttribute="bottom" constant="5" id="dFz-4D-GLs"/>
                                                 <constraint firstItem="3DU-xR-qS8" firstAttribute="leading" secondItem="teG-js-SLw" secondAttribute="leading" constant="10" id="dW8-S9-ehV"/>
                                                 <constraint firstItem="3fB-23-8bI" firstAttribute="centerX" secondItem="3DU-xR-qS8" secondAttribute="centerX" id="eoZ-AF-4PB"/>
@@ -556,7 +557,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="Aan-e1-vcJ" firstAttribute="leading" secondItem="huL-bX-w0C" secondAttribute="leading" id="RaP-4s-3ZA"/>
-                            <constraint firstItem="Ck6-ke-aXz" firstAttribute="top" secondItem="Aan-e1-vcJ" secondAttribute="bottom" id="RkQ-Lv-VVm"/>
+                            <constraint firstItem="Ck6-ke-aXz" firstAttribute="top" secondItem="Aan-e1-vcJ" secondAttribute="bottom" constant="44" id="RkQ-Lv-VVm"/>
                             <constraint firstItem="Aan-e1-vcJ" firstAttribute="top" secondItem="huL-bX-w0C" secondAttribute="top" id="UJh-yN-d4W"/>
                             <constraint firstAttribute="trailing" secondItem="Aan-e1-vcJ" secondAttribute="trailing" id="Vls-Jf-hLw"/>
                         </constraints>
@@ -564,6 +565,9 @@
                     <navigationItem key="navigationItem" title="歌单" id="ikS-D9-QwO">
                         <barButtonItem key="leftBarButtonItem" image="back" id="s7Q-8Z-m10">
                             <color key="tintColor" red="0.25490196078431371" green="0.25490196078431371" blue="0.25490196078431371" alpha="1" colorSpace="calibratedRGB"/>
+                            <connections>
+                                <action selector="backItemAction:" destination="sz6-6T-Iu9" id="B0I-xh-B93"/>
+                            </connections>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics"/>
@@ -736,7 +740,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="YGB-yM-IOP">
-                                                    <rect key="frame" x="60" y="5" width="36" height="17"/>
+                                                    <rect key="frame" x="60" y="5" width="200" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.25490196079999999" green="0.25490196079999999" blue="0.25490196079999999" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
@@ -770,6 +774,7 @@
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="0yt-Td-Otr" firstAttribute="centerY" secondItem="bTf-yo-xFK" secondAttribute="centerY" id="0Ww-fn-OHB"/>
+                                                <constraint firstItem="6KJ-2d-8pQ" firstAttribute="leading" secondItem="YGB-yM-IOP" secondAttribute="trailing" constant="10" id="3BT-Gj-Nzf"/>
                                                 <constraint firstItem="bTf-yo-xFK" firstAttribute="top" secondItem="IA7-jC-Mks" secondAttribute="top" constant="10" id="8a9-HB-aTX"/>
                                                 <constraint firstItem="0yt-Td-Otr" firstAttribute="width" secondItem="bTf-yo-xFK" secondAttribute="width" id="Fsy-A8-Ipx"/>
                                                 <constraint firstItem="0yt-Td-Otr" firstAttribute="centerX" secondItem="bTf-yo-xFK" secondAttribute="centerX" id="Ge2-Zv-Cbl"/>
@@ -842,6 +847,6 @@
         <image name="search1" width="21" height="21"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="LVt-6Y-R3i"/>
+        <segue reference="CoW-9B-byD"/>
     </inferredMetricsTieBreakers>
 </document>

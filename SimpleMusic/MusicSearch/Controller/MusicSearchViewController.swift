@@ -16,6 +16,7 @@ class MusicSearchViewController: UIViewController {
     @IBOutlet weak var changeBtn: UIButton!
     @IBOutlet weak var segmented: UISegmentedControl!
     var dataArray = NSMutableArray()
+    var idArray = NSMutableArray()
     var songArray = NSMutableArray()
     var singerArray = NSMutableArray()
     var albumArray = NSMutableArray()
@@ -163,13 +164,14 @@ extension MusicSearchViewController: UITableViewDataSource {
             cell.picImage.hidden = true
             cell.indexLab.text = "\(indexPath.row + 1)"
             cell.titleLab.text = model.name
-            cell.singerNameLab.text = model.singerName
+            let album = (model.albumName != nil) ? model.albumName : ""
+            cell.singerNameLab.text = model.singerName + "  " + album
         case "artist":
             cell.indexLab.hidden = true
             cell.picImage.hidden = false
             cell.titleLab.text = model.singerName
             cell.picImage.sd_setImageWithURL(NSURL(string: model.picUrl))
-            cell.singerNameLab.text = "\(model.song_num)首单曲 \(model.album_num)张专辑"
+            cell.singerNameLab.text = "\(model.song_num)首单曲  \(model.album_num)张专辑"
         case "songlist":
             cell.indexLab.hidden = true
             cell.picImage.hidden = false
@@ -197,12 +199,16 @@ extension MusicSearchViewController: UITableViewDelegate {
         return 50
     }
     
+    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        return 1
+    }
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
         let model = dataArray[indexPath.row] as! MusicModel
         switch model.searchType {
-        case "song":
-            print("播放音乐")
+        case "fav", "song":
+            print(idArray)
         case "artist", "songlist", "album":
             performSegueWithIdentifier("detail", sender: model)
         default: break
@@ -237,7 +243,10 @@ extension MusicSearchViewController {
                 let model = MusicModel()
                 model.searchType = "fav"
                 model.setValuesForKeysWithDictionary(dict as! [String : AnyObject])
-                self.favArray.addObject(model)
+                if model.songUrl.characters.count != 0 {
+                    self.favArray.addObject(model)
+                    self.idArray.addObject(model.songId)
+                }
             }
             self.dataArray = NSMutableArray(array: self.favArray)
         }
@@ -273,7 +282,10 @@ extension MusicSearchViewController {
                 model.setValuesForKeysWithDictionary(dict as! [String : AnyObject])
                 switch type {
                 case "song":
-                    self.songArray.addObject(model)
+                    if  model.songUrl != nil {
+                        self.songArray.addObject(model)
+                        self.idArray.addObject(model.songId)
+                    }
                 case "artist":
                     self.singerArray.addObject(model)
                 case "songlist":

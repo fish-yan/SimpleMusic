@@ -7,8 +7,12 @@
 //
 
 import UIKit
-var kScreenWidth = UIScreen.mainScreen().bounds.width
-var kScreenHeight = UIScreen.mainScreen().bounds.height
+
+var playStatus = false
+
+let kScreenWidth = UIScreen.mainScreen().bounds.width
+let kScreenHeight = UIScreen.mainScreen().bounds.height
+
 class RootViewController: UIViewController {
 
     @IBOutlet weak var lineLeftMargin: NSLayoutConstraint!
@@ -16,8 +20,8 @@ class RootViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.interactivePopGestureRecognizer?.delegate = self
-        let playerView = MusicPlayerView(frame: CGRect(x: 0, y: kScreenHeight - 50, width: kScreenWidth, height: kScreenHeight))
-        navigationController?.view.addSubview(playerView)
+        navigationController?.view.addSubview(MusicPlayerView.sharePlayer)
+        print(MusicPlayerView.sharePlayer)
         // Do any additional setup after loading the view.
     }
 
