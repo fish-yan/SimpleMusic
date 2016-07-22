@@ -11,7 +11,7 @@ import UIKit
 import AVFoundation
 
 class MusicPlayerView: UIView {
-    static let sharePlayer = MusicPlayerView(frame: CGRect(x: 0, y: kScreenHeight - 50, width: kScreenWidth, height: kScreenHeight))
+    static let sharePlayer = MusicPlayerView(frame: CGRect(x: 0, y: kScreenHeight - 84, width: kScreenWidth, height: kScreenHeight))
     var player = AVPlayer()
     
     @IBOutlet weak var endTimeLab: UILabel!
@@ -22,8 +22,14 @@ class MusicPlayerView: UIView {
     @IBOutlet weak var musicTitleLab: UILabel!
     @IBOutlet weak var musicImageView: UIImageView!
     @IBOutlet weak var navHeightMargin: NSLayoutConstraint!
+    
+    @IBOutlet weak var backView: UIView!
+    @IBOutlet weak var imageTopMargin: NSLayoutConstraint!
+    @IBOutlet weak var imageLedingMargin: NSLayoutConstraint!
+    @IBOutlet weak var imageHeightMargin: NSLayoutConstraint!
+    @IBOutlet weak var imageWidthMargin: NSLayoutConstraint!
     var model = SingleMusicModel()
-    var minY:CGFloat = kScreenHeight - 44
+    var minY:CGFloat = kScreenHeight - 84
     var songIdArray = NSArray()
     var currentIndex = 0
     private override init(frame: CGRect) {
@@ -51,29 +57,40 @@ class MusicPlayerView: UIView {
             self.frame = CGRect(x: 0, y: self.minY, width: kScreenWidth, height: kScreenHeight)
             self.layoutIfNeeded()
         }
-        if minY == kScreenHeight - 44 {
+        if minY == kScreenHeight - 84 {
             backBtn.hidden = true
             topPlayerBtn.hidden = false
             musicTitleLab.textAlignment = .Left
+            
         } else {
             backBtn.hidden = false
             topPlayerBtn.hidden = true
             musicTitleLab.textAlignment = .Center
+            
         }
     }
     
     @IBAction private func backBtnAction(sender: UIButton) {
         if minY == 0 {
-            minY = kScreenHeight - 44
+            minY = kScreenHeight - 84
+            backView.alpha = 0.0
             navHeightMargin.constant = 44
+            imageWidthMargin.constant = 34
+            imageHeightMargin.constant = 34
+            imageTopMargin.constant = 5
             configureView()
         }
     }
     
     @objc private func tapGestureAction(sender: UITapGestureRecognizer) {
-        if minY == kScreenHeight - 44 {
+        if minY == kScreenHeight - 84 {
             minY = 0
+            backView.alpha = 0.3
             navHeightMargin.constant = 64
+            imageWidthMargin.constant = kScreenWidth - 40
+            imageHeightMargin.constant = kScreenHeight - 80
+            imageTopMargin.constant = 0
+            imageLedingMargin.constant = 0
             configureView()
         }
     }
@@ -95,6 +112,7 @@ extension MusicPlayerView {
     }
     
     @IBAction private func playerBtnAction(sender: UIButton) {
+        sender.selected = playStatus
         if playStatus {
             player.pause()
             playStatus = false
@@ -102,16 +120,22 @@ extension MusicPlayerView {
             player.play()
             playStatus = true
         }
-        
-        sender.selected = playStatus
     }
     
     @IBAction private func lastBtnAction(sender: UIButton) {
-        
+        currentIndex -= 1
+        if currentIndex == -1 {
+            currentIndex = songIdArray.count - 1
+        }
+        getMusic()
     }
     
     @IBAction private func nextBtnAction(sender: UIButton) {
-        
+        currentIndex += 1
+        if currentIndex == songIdArray.count {
+            currentIndex = 0
+        }
+        getMusic()
     }
 }
 

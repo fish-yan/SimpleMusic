@@ -61,7 +61,7 @@ extension MusicListViewController: UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("MusicListCell", forIndexPath: indexPath) as! MusicListCell
         let model = dataArray[indexPath.row] as! MusicModel
-        cell.musicImageView.sd_setImageWithURL(NSURL(string: model.picUrl))
+        cell.musicImageView.sd_setImageWithURL(NSURL(string: model.picUrl!))
         cell.musicTitleLab.text = model.title
         return cell
     }
