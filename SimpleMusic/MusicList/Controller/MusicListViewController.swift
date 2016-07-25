@@ -79,7 +79,7 @@ extension MusicListViewController: UICollectionViewDataSource {
 extension MusicListViewController: UICollectionViewDelegateFlowLayout {
     
     func collectionView(collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAtIndexPath indexPath: NSIndexPath) -> CGSize {
-        return CGSize(width: (kScreenWidth - 30) / 2, height: (kScreenWidth - 30) / 2 + 30)
+        return CGSize(width: (kScreenWidth - 60) / 2, height: (kScreenWidth - 60) / 2 + 30)
     }
     
 }

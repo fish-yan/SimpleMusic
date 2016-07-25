@@ -19,17 +19,8 @@ class SingleMusicModel: NSObject {
 //    var albumName: String!
     
     override func setValue(value: AnyObject?, forUndefinedKey key: String) {
-        if key == "llList" {
-            if value is NSArray {
-                let array = value as! NSArray
-                if array.count != 0 {
-                    let dict = array.lastObject as! NSDictionary
-                    songUrl = dict["url"] as! String
-                }
-            }
-        }
         
-        if songUrl == nil && key == "urlList" {
+        if key == "urlList" {
             if value is NSArray {
                 let array = value as! NSArray
                 if array.count != 0 {

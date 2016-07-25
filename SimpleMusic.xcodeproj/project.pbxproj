@@ -374,6 +374,12 @@
 				TargetAttributes = {
 					933A27FB1D2556BC007541EB = {
 						CreatedOnToolsVersion = 7.3.1;
+						DevelopmentTeam = UZT23M6T33;
+						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
+						};
 					};
 					933A28121D2556BD007541EB = {
 						CreatedOnToolsVersion = 7.3.1;
@@ -647,10 +653,13 @@
 			baseConfigurationReference = 40C30E11C66994B386847F9D /* Pods-SimpleMusic.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SimpleMusic/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xueyan.SimpleMusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/SimpleMusic/SimpleMusic.h";
 			};
 			name = Debug;
@@ -660,10 +669,13 @@
 			baseConfigurationReference = 7186B1DF221A85282BA1EB09 /* Pods-SimpleMusic.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SimpleMusic/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.xueyan.SimpleMusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/SimpleMusic/SimpleMusic.h";
 			};
 			name = Release;

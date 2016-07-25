@@ -208,7 +208,7 @@ extension MusicSearchViewController: UITableViewDelegate {
         let model = dataArray[indexPath.row] as! MusicModel
         switch model.searchType {
         case "fav", "song":
-            print(idArray)
+            MusicPlayerView.sharePlayer.loadMusicWith(idArray, index: indexPath.row)
         case "artist", "songlist", "album":
             performSegueWithIdentifier("detail", sender: model)
         default: break
@@ -237,6 +237,7 @@ extension MusicSearchViewController {
     func getFavouriteMusicList() {
         HttpHelper.shareHelper.loadData(withView: tableView, url: "http://api.favorite.ttpod.com/favorite/song/plaza", parameters: ["random":"1"]) { (response) in
             self.favArray = NSMutableArray()
+            self.idArray = NSMutableArray()
             let dataDict = response!["data"] as! NSDictionary
             let array = dataDict["songs"] as! NSArray
             for dict in array {

@@ -98,7 +98,7 @@ extension MusicListDetailViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
-        print(idArray)
+        MusicPlayerView.sharePlayer.loadMusicWith(idArray, index: indexPath.row)
     }
     
 }
@@ -109,6 +109,7 @@ extension MusicListDetailViewController {
     
     func getSingerSongsList() {
         HttpHelper.shareHelper.loadData(withView: tableView, url: "http://api.dongting.com/song/singer/\(model.singerId)/songs", parameters: ["size":"20", "page":"\(pageIndex)"]) { (response) in
+            self.idArray = NSMutableArray()
             let array = response!["data"] as! NSArray
             for dict in array {
                 let model = MusicModel()
@@ -123,6 +124,7 @@ extension MusicListDetailViewController {
     
     func getAlbumSongsList() {
         HttpHelper.shareHelper.loadData(withView: tableView, url: "http://api.dongting.com/song/album/\(model.albumId)", parameters: ["size":"20", "page":"\(pageIndex)"]) { (response) in
+            self.idArray = NSMutableArray()
             let dict = response!["data"] as! NSDictionary
             let array = dict["songList"] as! NSArray
             for dict in array {
@@ -139,6 +141,7 @@ extension MusicListDetailViewController {
     
     func getMusicListSongsList() {
         HttpHelper.shareHelper.loadData(withView: tableView, url: "http://api.songlist.ttpod.com/songlists/\(model.songListId)", parameters: ["size":"20", "page":"\(pageIndex)"]) { (response) in
+            self.idArray = NSMutableArray()
             let array = response!["songs"] as! NSArray
             for dict in array {
                 let model = MusicModel()
