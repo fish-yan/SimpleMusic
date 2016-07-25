@@ -78,7 +78,7 @@ extension MusicListDetailViewController: UITableViewDataSource {
         cell.indexLab.text = "\(indexPath.row + 1)"
         cell.titleLab.text = songModel.name
         let album = (songModel.albumName != nil) ? songModel.albumName : ""
-        cell.singerNameLab.text = songModel.singerName + "  " + album
+        cell.singerNameLab.text = songModel.singerName! + "  " + album!
         return cell;
     }
     
@@ -116,7 +116,7 @@ extension MusicListDetailViewController {
                 model.setValuesForKeysWithDictionary(dict as! [String : AnyObject])
                 if  model.songUrl != nil {
                     self.dataArray.addObject(model)
-                    self.idArray.addObject(model.songId)
+                    self.idArray.addObject(model.songId!)
                 }
             }
         }
@@ -132,7 +132,7 @@ extension MusicListDetailViewController {
                 model.setValuesForKeysWithDictionary(dict as! [String : AnyObject])
                 if  model.songUrl != nil {
                     self.dataArray.addObject(model)
-                    self.idArray.addObject(model.songId)
+                    self.idArray.addObject(model.songId!)
                 }
                 
             }
@@ -148,7 +148,7 @@ extension MusicListDetailViewController {
                 model.setValuesForKeysWithDictionary(dict as! [String : AnyObject])
                 if model.songUrl != nil {
                     self.dataArray.addObject(model)
-                    self.idArray.addObject(model.songId)
+                    self.idArray.addObject(model.songId!)
                 }
             }
         }

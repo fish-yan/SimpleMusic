@@ -23,6 +23,7 @@ class MusicModel: NSObject {
     var album_num: NSNumber! // 专辑数量
     var albumId: NSNumber! // 专辑id
     var song_num: NSNumber! // 歌曲数量
+    
     override func setValue(value: AnyObject?, forUndefinedKey key: String) {
         
         if key == "llList" {
@@ -30,7 +31,7 @@ class MusicModel: NSObject {
                 let array = value as! NSArray
                 if array.count != 0 {
                     let dict = array.lastObject as! NSDictionary
-                    songUrl = dict["url"] as! String
+                    songUrl = dict["url"] as? String
                 }
             }
         }
@@ -40,13 +41,13 @@ class MusicModel: NSObject {
                 let array = value as! NSArray
                 if array.count != 0 {
                     let dict = array.lastObject as! NSDictionary
-                    songUrl = dict["url"] as! String
+                    songUrl = dict["url"] as? String
                 }
             }
         }
         
         if key == "singer_name" {
-            singerName = value as! String
+            singerName = value as? String
         }
         
         if key == "_id" {
@@ -54,7 +55,7 @@ class MusicModel: NSObject {
         }
         
         if key == "pic_url" {
-            picUrl = value as! String
+            picUrl = value as? String
         }
         
         if key == "song_list" {

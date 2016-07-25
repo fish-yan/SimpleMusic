@@ -8,17 +8,17 @@
 
 /* Begin PBXBuildFile section */
 		3E3DC643C38ED08EA0D129B8 /* libPods-SimpleMusic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B194E35260F485978950C17 /* libPods-SimpleMusic.a */; };
+		930C5A1C1D464F0D00EA444F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 930C5A1B1D464F0D00EA444F /* Main.storyboard */; };
+		930C5A1E1D464F1C00EA444F /* MusicPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930C5A1D1D464F1C00EA444F /* MusicPlayerView.xib */; };
 		9310EF411D2CD3F700776910 /* MusicSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9310EF401D2CD3F700776910 /* MusicSearchCell.swift */; };
 		9310EF431D2CDBB700776910 /* MusicListReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9310EF421D2CDBB700776910 /* MusicListReusableView.swift */; };
 		9310EF451D2CE11B00776910 /* MusicPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9310EF441D2CE11B00776910 /* MusicPlayerView.swift */; };
-		9310EF471D2CE12900776910 /* MusicPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9310EF461D2CE12900776910 /* MusicPlayerView.xib */; };
 		93153CB51D3F15F500899571 /* MusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93153CB41D3F15F500899571 /* MusicModel.swift */; };
 		93153CB71D3F663200899571 /* MusicListDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93153CB61D3F663200899571 /* MusicListDetailViewController.swift */; };
 		933564201D33464900A8F0B3 /* MusicTypeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9335641F1D33464900A8F0B3 /* MusicTypeViewController.swift */; };
 		933564221D33469600A8F0B3 /* MusicTypeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933564211D33469600A8F0B3 /* MusicTypeCell.swift */; };
 		933564241D3346A900A8F0B3 /* MusicTypeReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933564231D3346A900A8F0B3 /* MusicTypeReusableView.swift */; };
 		933A28001D2556BC007541EB /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933A27FF1D2556BC007541EB /* AppDelegate.swift */; };
-		933A28051D2556BC007541EB /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 933A28031D2556BC007541EB /* Main.storyboard */; };
 		933A28081D2556BC007541EB /* SimpleMusic.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 933A28061D2556BC007541EB /* SimpleMusic.xcdatamodeld */; };
 		933A280A1D2556BC007541EB /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 933A28091D2556BC007541EB /* Assets.xcassets */; };
 		933A280D1D2556BC007541EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 933A280B1D2556BC007541EB /* LaunchScreen.storyboard */; };
@@ -54,10 +54,11 @@
 		40C30E11C66994B386847F9D /* Pods-SimpleMusic.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleMusic.debug.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleMusic/Pods-SimpleMusic.debug.xcconfig"; sourceTree = "<group>"; };
 		7186B1DF221A85282BA1EB09 /* Pods-SimpleMusic.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-SimpleMusic.release.xcconfig"; path = "Pods/Target Support Files/Pods-SimpleMusic/Pods-SimpleMusic.release.xcconfig"; sourceTree = "<group>"; };
 		7B194E35260F485978950C17 /* libPods-SimpleMusic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SimpleMusic.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		930C5A1B1D464F0D00EA444F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
+		930C5A1D1D464F1C00EA444F /* MusicPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicPlayerView.xib; sourceTree = "<group>"; };
 		9310EF401D2CD3F700776910 /* MusicSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicSearchCell.swift; sourceTree = "<group>"; };
 		9310EF421D2CDBB700776910 /* MusicListReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicListReusableView.swift; sourceTree = "<group>"; };
 		9310EF441D2CE11B00776910 /* MusicPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayerView.swift; sourceTree = "<group>"; };
-		9310EF461D2CE12900776910 /* MusicPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicPlayerView.xib; sourceTree = "<group>"; };
 		93153CB41D3F15F500899571 /* MusicModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicModel.swift; sourceTree = "<group>"; };
 		93153CB61D3F663200899571 /* MusicListDetailViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicListDetailViewController.swift; sourceTree = "<group>"; };
 		9335641F1D33464900A8F0B3 /* MusicTypeViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicTypeViewController.swift; sourceTree = "<group>"; };
@@ -65,7 +66,6 @@
 		933564231D3346A900A8F0B3 /* MusicTypeReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicTypeReusableView.swift; sourceTree = "<group>"; };
 		933A27FC1D2556BC007541EB /* SimpleMusic.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SimpleMusic.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		933A27FF1D2556BC007541EB /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		933A28041D2556BC007541EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		933A28071D2556BC007541EB /* SimpleMusic.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = SimpleMusic.xcdatamodel; sourceTree = "<group>"; };
 		933A28091D2556BC007541EB /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		933A280C1D2556BC007541EB /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -155,7 +155,7 @@
 			children = (
 				933A27FF1D2556BC007541EB /* AppDelegate.swift */,
 				939F8D321D2B2AE0008BD9D6 /* RootViewController.swift */,
-				933A28031D2556BC007541EB /* Main.storyboard */,
+				930C5A1B1D464F0D00EA444F /* Main.storyboard */,
 				939F8D3C1D2B2BAE008BD9D6 /* Mine */,
 				939F8D411D2B2BAE008BD9D6 /* MusicList */,
 				939F8D461D2B2BAE008BD9D6 /* MusicSearch */,
@@ -279,8 +279,8 @@
 			isa = PBXGroup;
 			children = (
 				93EDAAC91D2B565800BF9211 /* HttpHelper.swift */,
+				930C5A1D1D464F1C00EA444F /* MusicPlayerView.xib */,
 				9310EF441D2CE11B00776910 /* MusicPlayerView.swift */,
-				9310EF461D2CE12900776910 /* MusicPlayerView.xib */,
 				936E2D411D40C07700C08134 /* SingleMusicModel.swift */,
 			);
 			path = Public;
@@ -416,10 +416,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				930C5A1C1D464F0D00EA444F /* Main.storyboard in Resources */,
+				930C5A1E1D464F1C00EA444F /* MusicPlayerView.xib in Resources */,
 				933A280D1D2556BC007541EB /* LaunchScreen.storyboard in Resources */,
-				9310EF471D2CE12900776910 /* MusicPlayerView.xib in Resources */,
 				933A280A1D2556BC007541EB /* Assets.xcassets in Resources */,
-				933A28051D2556BC007541EB /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -544,14 +544,6 @@
 /* End PBXTargetDependency section */
 
 /* Begin PBXVariantGroup section */
-		933A28031D2556BC007541EB /* Main.storyboard */ = {
-			isa = PBXVariantGroup;
-			children = (
-				933A28041D2556BC007541EB /* Base */,
-			);
-			name = Main.storyboard;
-			sourceTree = "<group>";
-		};
 		933A280B1D2556BC007541EB /* LaunchScreen.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (

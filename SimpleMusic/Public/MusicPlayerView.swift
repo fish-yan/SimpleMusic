@@ -13,7 +13,6 @@ import AVFoundation
 class MusicPlayerView: UIView {
     static let sharePlayer = MusicPlayerView(frame: CGRect(x: 0, y: kScreenHeight - 84, width: kScreenWidth, height: kScreenHeight))
     var player = AVPlayer()
-    @IBOutlet weak var backImage: UIImageView!
     
     @IBOutlet weak var endTimeLab: UILabel!
     @IBOutlet weak var beginTimeLab: UILabel!
@@ -28,8 +27,8 @@ class MusicPlayerView: UIView {
     @IBOutlet weak var imageHeight: NSLayoutConstraint!
     @IBOutlet weak var imageLeading: NSLayoutConstraint!
     @IBOutlet weak var imageTop: NSLayoutConstraint!
-    @IBOutlet weak var topView: UIView!
     @IBOutlet weak var backView: UIView!
+
     var model = SingleMusicModel()
     var minY:CGFloat = kScreenHeight - 84
     var songIdArray = NSArray()
@@ -66,21 +65,25 @@ class MusicPlayerView: UIView {
             backBtn.hidden = true
             topPlayerBtn.hidden = false
             musicTitleLab.textAlignment = .Left
+            
         } else {
             backBtn.hidden = false
             topPlayerBtn.hidden = true
             musicTitleLab.textAlignment = .Center
+            
         }
     }
     
     @IBAction private func backBtnAction(sender: UIButton) {
         if minY == 0 {
             minY = kScreenHeight - 84
+
             navHeightMargin.constant = 44
             imageTop.constant = 5
             imageWidth.constant = 34
             imageHeight.constant = 34
             backView.alpha = 0
+
             configureView()
         }
     }
@@ -88,6 +91,7 @@ class MusicPlayerView: UIView {
     @objc private func tapGestureAction(sender: UITapGestureRecognizer) {
         if minY == kScreenHeight - 84 {
             minY = 0
+            backView.alpha = 0.3
             navHeightMargin.constant = 64
             imageTop.constant = 0
             imageWidth.constant = kScreenWidth - 40
@@ -123,7 +127,6 @@ extension MusicPlayerView {
             let picDict = model.picArray[0] as! NSDictionary
             let picUrl = picDict["picUrl"] as! String
             musicImageView.sd_setImageWithURL(NSURL(string: picUrl)!)
-            backImage.sd_setImageWithURL(NSURL(string: picUrl)!)
         }
         
         let playerItem = AVPlayerItem(URL: NSURL(string: model.songUrl)!)
@@ -143,6 +146,7 @@ extension MusicPlayerView {
     }
     
     @IBAction private func playerBtnAction(sender: UIButton) {
+        sender.selected = playStatus
         if playStatus {
             player.pause()
             playStatus = false
@@ -157,6 +161,7 @@ extension MusicPlayerView {
     
     @IBAction private func lastBtnAction(sender: UIButton) {
         isAdd = false
+
         currentIndex -= 1
         if currentIndex == -1 {
             currentIndex = songIdArray.count - 1
