@@ -49,9 +49,10 @@ class MusicPlayerView: UIView {
         playerView.frame = self.bounds
         addSubview(playerView)
         slider.setThumbImage(UIImage(named: "slider"), forState: .Normal)
-        let tap = UITapGestureRecognizer(target: self
-            , action: #selector(tapGestureAction(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(tapGestureAction(_:)))
         addGestureRecognizer(tap)
+        let pan = UIPanGestureRecognizer(target: self, action: #selector(panGestureAtion(_:)))
+        addGestureRecognizer(pan)
         configureView()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(nextBtnAction(_:)), name: AVPlayerItemDidPlayToEndTimeNotification, object: nil)
     }
@@ -100,20 +101,29 @@ class MusicPlayerView: UIView {
             configureView()
         }
     }
-
-    deinit {
-        print("111")
-    }
     
-    private func getBlurImage(image: UIImage) -> UIImage {
-        let context = CIContext(options: nil)
-        let inputImage = CIImage(CGImage: image.CGImage!)
-        let filter = CIFilter(name: "CIGaussianBlur")
-        filter!.setValue(inputImage, forKey: kCIInputImageKey)
-        filter!.setValue(NSNumber(float: 0.5), forKey: "inputRadius")
-        let outImage = filter!.outputImage
-        let refImage = context.createCGImage(outImage!, fromRect: outImage!.extent)
-        return UIImage(CGImage: refImage)
+    @objc private func panGestureAtion(sender: UIPanGestureRecognizer) {
+        var transofm = CATransform3DIdentity
+        let translateY = sender.translationInView(self).y
+        switch sender.state {
+        case .Changed:
+            transofm = CATransform3DTranslate(transofm, 0, translateY, 0)
+//            backView.alpha = -translateY / (kScreenHeight * 2);
+        case .Ended, .Cancelled:
+            if (translateY < -100) {
+                transofm = CATransform3DTranslate(transofm, 0, -kScreenHeight + 84, 0)
+//                tapGestureAction(UITapGestureRecognizer())
+            } else {
+                transofm = CATransform3DIdentity
+//                backBtnAction(UIButton())
+            }
+            
+        default: break
+            
+        }
+        UIView.animateWithDuration(0.3) { 
+            self.layer.transform = transofm
+        }
     }
     
 }
