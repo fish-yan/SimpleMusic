@@ -14,6 +14,8 @@ class MusicPlayerView: UIView {
     static let sharePlayer = MusicPlayerView(frame: CGRect(x: 0, y: kScreenHeight - 84, width: kScreenWidth, height: kScreenHeight))
     var player = AVPlayer()
     
+    @IBOutlet weak var forgroundView: UIView!
+    @IBOutlet weak var backImage: UIImageView!
     @IBOutlet weak var endTimeLab: UILabel!
     @IBOutlet weak var beginTimeLab: UILabel!
     @IBOutlet weak var backBtn: UIButton!
@@ -28,10 +30,10 @@ class MusicPlayerView: UIView {
     @IBOutlet weak var imageLeading: NSLayoutConstraint!
     @IBOutlet weak var imageTop: NSLayoutConstraint!
     @IBOutlet weak var backView: UIView!
-
+    var senderVC: RootViewController!
     var model = SingleMusicModel()
-    var minY:CGFloat = kScreenHeight - 84
     var songIdArray = NSArray()
+    var currentSongId: NSNumber!
     var currentIndex = 0
     var isAdd = true
     private override init(frame: CGRect) {
@@ -53,108 +55,118 @@ class MusicPlayerView: UIView {
         addGestureRecognizer(tap)
         let pan = UIPanGestureRecognizer(target: self, action: #selector(panGestureAtion(_:)))
         addGestureRecognizer(pan)
-        configureView()
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(nextBtnAction(_:)), name: AVPlayerItemDidPlayToEndTimeNotification, object: nil)
     }
     
-    private func configureView() {
-        UIView.animateWithDuration(0.25) {
-            self.frame = CGRect(x: 0, y: self.minY, width: kScreenWidth, height: kScreenHeight)
-            self.layoutIfNeeded()
-        }
-        if minY == kScreenHeight - 84 {
-            backBtn.hidden = true
-            topPlayerBtn.hidden = false
-            musicTitleLab.textAlignment = .Left
-            
-        } else {
-            backBtn.hidden = false
-            topPlayerBtn.hidden = true
-            musicTitleLab.textAlignment = .Center
-            
-        }
-    }
-    
     @IBAction private func backBtnAction(sender: UIButton) {
-        if minY == 0 {
-            minY = kScreenHeight - 84
-
-            navHeightMargin.constant = 44
-            imageTop.constant = 5
-            imageWidth.constant = 34
-            imageHeight.constant = 34
-            backView.alpha = 0
-
-            configureView()
-        }
+        hiddenMusicPlayerView()
+        
     }
     
     @objc private func tapGestureAction(sender: UITapGestureRecognizer) {
-        if minY == kScreenHeight - 84 {
-            minY = 0
-            backView.alpha = 0.3
-            navHeightMargin.constant = 64
-            imageTop.constant = 0
-            imageWidth.constant = kScreenWidth - 40
-            imageHeight.constant = kScreenHeight - 80
-            backView.alpha = 0.5
-            configureView()
-        }
+        showMusicPlayerView()
     }
     
     @objc private func panGestureAtion(sender: UIPanGestureRecognizer) {
-        var transofm = CATransform3DIdentity
+        var transform = CATransform3DIdentity
         let translateY = sender.translationInView(self).y
         
         let changeY = translateY > 0 ? -kScreenHeight + 84 + translateY : translateY
         switch sender.state {
         case .Changed:
-            transofm = CATransform3DTranslate(transofm, 0, changeY, 0)
-//            backView.alpha = -translateY / (kScreenHeight * 2);
+            transform = CATransform3DTranslate(transform, 0, changeY, 0)
+            self.layer.transform = transform
         case .Ended, .Cancelled:
             print(translateY)
             if (translateY < -150 || (translateY > 0 && translateY < 150) ) {
-                transofm = CATransform3DTranslate(transofm, 0, -kScreenHeight + 84, 0)
-                backView.alpha = 0.3
-                navHeightMargin.constant = 64
-                imageTop.constant = 0
-                imageWidth.constant = kScreenWidth - 40
-                imageHeight.constant = kScreenHeight - 80
-                backView.alpha = 0.5
-                backBtn.hidden = false
-                topPlayerBtn.hidden = true
-                musicTitleLab.textAlignment = .Center
-//                configureView()
-//                tapGestureAction(UITapGestureRecognizer())
+                showMusicPlayerView()
             } else {
-                transofm = CATransform3DIdentity
-                navHeightMargin.constant = 44
-                imageTop.constant = 5
-                imageWidth.constant = 34
-                imageHeight.constant = 34
-                backView.alpha = 0
-                backBtn.hidden = true
-                topPlayerBtn.hidden = false
-                musicTitleLab.textAlignment = .Left
-//                configureView()
-//                backBtnAction(UIButton())
+                hiddenMusicPlayerView()
             }
             
         default: break
-            
         }
-        UIView.animateWithDuration(0.3) { 
-            self.layer.transform = transofm
+        
+    }
+    
+    
+    private func showMusicPlayerView() {
+        forgroundView.hidden = true
+        let screenImage = fullScreen()
+        forgroundView.hidden = false
+        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
+            let image = self.creatBlurImage(screenImage)
+            dispatch_async(dispatch_get_main_queue(), {
+                self.backImage.image = image
+            })
+        })
+        
+        navHeightMargin.constant = 64
+        imageTop.constant = 0
+        imageWidth.constant = kScreenWidth - 40
+        imageHeight.constant = kScreenHeight - 80
+        backBtn.hidden = false
+        topPlayerBtn.hidden = true
+        musicTitleLab.textAlignment = .Center
+        var transform = CATransform3DIdentity
+        transform = CATransform3DTranslate(transform, 0, -kScreenHeight + 84, 0)
+        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 5, options: .AllowUserInteraction, animations: {
+            self.backView.alpha = 0.3
+            self.layer.transform = transform
             self.layoutIfNeeded()
+        }) { (finish) in
         }
     }
     
+    private func hiddenMusicPlayerView() {
+        self.backImage.image = nil
+        navHeightMargin.constant = 44
+        imageTop.constant = 5
+        imageWidth.constant = 34
+        imageHeight.constant = 34
+        backBtn.hidden = true
+        topPlayerBtn.hidden = false
+        musicTitleLab.textAlignment = .Left
+        UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 5, options: .AllowUserInteraction, animations: {
+            self.backView.alpha = 0
+            self.layer.transform = CATransform3DIdentity
+            self.layoutIfNeeded()
+        }) { (finish) in
+            
+        }
+    }
+    
+    func fullScreen() -> UIImage {
+        UIGraphicsBeginImageContextWithOptions(UIScreen.mainScreen().bounds.size, false, 1)
+        senderVC.navigationController!.view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
+        let inImage = UIGraphicsGetImageFromCurrentImageContext()
+        return inImage
+    }
+    
+    private func creatBlurImage(inImage: UIImage) -> UIImage {
+        let inputImage = CIImage(CGImage: inImage.CGImage!)
+        let filter = CIFilter(name: "CIGaussianBlur")
+        filter?.setValue(inputImage, forKey: kCIInputImageKey)
+        filter?.setValue(NSNumber(float: 1.5), forKey: "inputRadius")
+        let context = CIContext(options: nil)
+        let outputImage = filter?.outputImage
+        let refImage = context.createCGImage(outputImage!, fromRect: UIScreen.mainScreen().bounds)
+        let outImage = UIImage(CGImage: refImage)
+        return outImage
+    }
+    
 }
+
 
 // MARK: - PlayerAction
 
 extension MusicPlayerView {
     private func creatAudioPlayer() {
+        if currentSongId == model.songId {
+            playerBtnAction(UIButton())
+            return
+        }
+        currentSongId = model.songId
         musicTitleLab.text = model.name
         if model.picArray.count != 0 {
             let picDict = model.picArray[0] as! NSDictionary
@@ -163,7 +175,6 @@ extension MusicPlayerView {
         }
         
         let playerItem = AVPlayerItem(URL: NSURL(string: model.songUrl)!)
-        print("000-----\(model.songUrl)")
         player.replaceCurrentItemWithPlayerItem(playerItem)
         player.addPeriodicTimeObserverForInterval(CMTimeMake(1, 1), queue: dispatch_get_main_queue()) { (time) in
             let currentTime = CMTimeGetSeconds(time)
@@ -175,7 +186,10 @@ extension MusicPlayerView {
             let value = currentTime/totalTime as Float64
             self.slider.value = Float(value)
         }
-        playerBtnAction(UIButton())
+        player.play()
+        playStatus = true
+        playBtn.selected = playStatus
+        topPlayerBtn.selected = playStatus
     }
     
     @IBAction private func playerBtnAction(sender: UIButton) {
