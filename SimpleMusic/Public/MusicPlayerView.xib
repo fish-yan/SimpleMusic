@@ -8,8 +8,7 @@
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MusicPlayerView" customModule="SimpleMusic" customModuleProvider="target">
             <connections>
                 <outlet property="backBtn" destination="hUK-vn-wkW" id="E8j-5G-tlx"/>
-                <outlet property="backImage" destination="fvf-da-l6l" id="rrr-8R-ibe"/>
-                <outlet property="backView" destination="brL-CU-Rzp" id="9fu-4A-Drp"/>
+                <outlet property="backView" destination="o0I-7l-LC5" id="txG-oH-DnD"/>
                 <outlet property="beginTimeLab" destination="ONg-XB-Oka" id="bNq-Qd-hpy"/>
                 <outlet property="endTimeLab" destination="ybq-mD-1BV" id="dm5-nM-Sr1"/>
                 <outlet property="forgroundView" destination="9fP-Lq-PZp" id="ZeW-S1-PZ8"/>
@@ -30,28 +29,9 @@
             <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
-                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o0I-7l-LC5">
+                <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o0I-7l-LC5">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                    <subviews>
-                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="fvf-da-l6l">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                        </imageView>
-                        <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="brL-CU-Rzp">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
-                            <color key="backgroundColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                        </view>
-                    </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                    <constraints>
-                        <constraint firstAttribute="bottom" secondItem="fvf-da-l6l" secondAttribute="bottom" id="AEc-uP-Gsx"/>
-                        <constraint firstItem="fvf-da-l6l" firstAttribute="leading" secondItem="o0I-7l-LC5" secondAttribute="leading" id="CIc-Af-yRd"/>
-                        <constraint firstAttribute="bottom" secondItem="brL-CU-Rzp" secondAttribute="bottom" id="Luo-yf-dMa"/>
-                        <constraint firstItem="brL-CU-Rzp" firstAttribute="top" secondItem="o0I-7l-LC5" secondAttribute="top" id="OXh-9n-PF5"/>
-                        <constraint firstItem="fvf-da-l6l" firstAttribute="top" secondItem="o0I-7l-LC5" secondAttribute="top" id="PM4-uu-iT1"/>
-                        <constraint firstAttribute="trailing" secondItem="fvf-da-l6l" secondAttribute="trailing" id="ZIa-4T-FWB"/>
-                        <constraint firstAttribute="trailing" secondItem="brL-CU-Rzp" secondAttribute="trailing" id="l64-Jm-WAf"/>
-                        <constraint firstItem="brL-CU-Rzp" firstAttribute="leading" secondItem="o0I-7l-LC5" secondAttribute="leading" id="tfW-81-vEO"/>
-                    </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9fP-Lq-PZp">
                     <rect key="frame" x="20" y="40" width="280" height="488"/>
@@ -172,7 +152,7 @@
                             <rect key="frame" x="8" y="433" width="264" height="31"/>
                             <color key="minimumTrackTintColor" red="0.80000000000000004" green="0.27058823529999998" blue="0.27450980390000002" alpha="1" colorSpace="calibratedRGB"/>
                             <connections>
-                                <action selector="sliderAction:" destination="-1" eventType="valueChanged" id="Ipa-FE-N6f"/>
+                                <action selector="sliderAction:" destination="-1" eventType="touchUpInside" id="Dmn-oJ-je2"/>
                             </connections>
                         </slider>
                         <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="00:00" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ONg-XB-Oka">

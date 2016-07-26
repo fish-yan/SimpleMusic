@@ -15,7 +15,6 @@ class MusicPlayerView: UIView {
     var player = AVPlayer()
     
     @IBOutlet weak var forgroundView: UIView!
-    @IBOutlet weak var backImage: UIImageView!
     @IBOutlet weak var endTimeLab: UILabel!
     @IBOutlet weak var beginTimeLab: UILabel!
     @IBOutlet weak var backBtn: UIButton!
@@ -50,6 +49,12 @@ class MusicPlayerView: UIView {
         let playerView = nib.instantiateWithOwner(self, options: nil).last as! UIView
         playerView.frame = self.bounds
         addSubview(playerView)
+        let blur = UIBlurEffect(style: .Dark)
+        let effe = UIVisualEffectView(effect: blur)
+        effe.layer.opacity = 0.95
+        effe.frame = bounds
+        backView.addSubview(effe)
+        
         slider.setThumbImage(UIImage(named: "slider"), forState: .Normal)
         let tap = UITapGestureRecognizer(target: self, action: #selector(tapGestureAction(_:)))
         addGestureRecognizer(tap)
@@ -76,6 +81,8 @@ class MusicPlayerView: UIView {
         case .Changed:
             transform = CATransform3DTranslate(transform, 0, changeY, 0)
             self.layer.transform = transform
+            let alphaY = changeY > 0 ? changeY : -changeY
+            backView.alpha = alphaY / (kScreenHeight - 84)
         case .Ended, .Cancelled:
             print(translateY)
             if (translateY < -150 || (translateY > 0 && translateY < 150) ) {
@@ -91,15 +98,6 @@ class MusicPlayerView: UIView {
     
     
     private func showMusicPlayerView() {
-        forgroundView.hidden = true
-        let screenImage = fullScreen()
-        forgroundView.hidden = false
-        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), {
-            let image = self.creatBlurImage(screenImage)
-            dispatch_async(dispatch_get_main_queue(), {
-                self.backImage.image = image
-            })
-        })
         
         navHeightMargin.constant = 64
         imageTop.constant = 0
@@ -111,7 +109,7 @@ class MusicPlayerView: UIView {
         var transform = CATransform3DIdentity
         transform = CATransform3DTranslate(transform, 0, -kScreenHeight + 84, 0)
         UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 5, options: .AllowUserInteraction, animations: {
-            self.backView.alpha = 0.3
+            self.backView.alpha = 1
             self.layer.transform = transform
             self.layoutIfNeeded()
         }) { (finish) in
@@ -119,7 +117,6 @@ class MusicPlayerView: UIView {
     }
     
     private func hiddenMusicPlayerView() {
-        self.backImage.image = nil
         navHeightMargin.constant = 44
         imageTop.constant = 5
         imageWidth.constant = 34
@@ -135,7 +132,7 @@ class MusicPlayerView: UIView {
             
         }
     }
-    
+    /*
     func fullScreen() -> UIImage {
         UIGraphicsBeginImageContextWithOptions(UIScreen.mainScreen().bounds.size, false, 1)
         senderVC.navigationController!.view.layer.renderInContext(UIGraphicsGetCurrentContext()!)
@@ -154,7 +151,7 @@ class MusicPlayerView: UIView {
         let outImage = UIImage(CGImage: refImage)
         return outImage
     }
-    
+    */
 }
 
 
@@ -227,6 +224,7 @@ extension MusicPlayerView {
     
     @IBAction func sliderAction(sender: UISlider) {
         let changeTime = Float64(sender.value) * CMTimeGetSeconds((player.currentItem?.duration)!)
+        player.pause()
         if player.currentItem?.status == AVPlayerItemStatus.ReadyToPlay {
             player.seekToTime(CMTimeMake(Int64(changeTime), 1), completionHandler: { (success) in
                 self.player.play()
