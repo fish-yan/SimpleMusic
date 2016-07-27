@@ -16,6 +16,7 @@ class SingleMusicModel: NSObject {
     var songId: NSNumber!
     var singerId: NSNumber!
     var picArray: NSArray!
+    var duration: NSNumber!
 //    var albumName: String!
     
     override func setValue(value: AnyObject?, forUndefinedKey key: String) {
@@ -26,6 +27,9 @@ class SingleMusicModel: NSObject {
                 if array.count != 0 {
                     let dict = array.lastObject as! NSDictionary
                     songUrl = dict["url"] as! String
+                    let dur = dict["duration"] as! NSNumber
+                    let flotDur: Float = dur.floatValue / 1000
+                    duration = NSNumber(float: flotDur)
                 }
             }
         }

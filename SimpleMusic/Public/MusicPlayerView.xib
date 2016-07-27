@@ -31,7 +31,23 @@
             <subviews>
                 <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o0I-7l-LC5">
                     <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <subviews>
+                        <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kOc-rt-ooE">
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="XcZ-U4-Jwq">
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            </view>
+                            <blurEffect style="dark"/>
+                        </visualEffectView>
+                    </subviews>
                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                    <constraints>
+                        <constraint firstItem="kOc-rt-ooE" firstAttribute="leading" secondItem="o0I-7l-LC5" secondAttribute="leading" id="2qK-z0-FDa"/>
+                        <constraint firstItem="kOc-rt-ooE" firstAttribute="top" secondItem="o0I-7l-LC5" secondAttribute="top" id="7Vc-PC-sLK"/>
+                        <constraint firstAttribute="bottom" secondItem="kOc-rt-ooE" secondAttribute="bottom" id="BSy-Qc-u18"/>
+                        <constraint firstAttribute="trailing" secondItem="kOc-rt-ooE" secondAttribute="trailing" id="y8L-b7-e6u"/>
+                    </constraints>
                 </view>
                 <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9fP-Lq-PZp">
                     <rect key="frame" x="20" y="40" width="280" height="488"/>
