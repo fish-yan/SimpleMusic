@@ -33,7 +33,7 @@ class MusicPlayerView: UIView {
     var senderVC: RootViewController!
     var model = SingleMusicModel()
     var songIdArray = NSArray()
-    var currentSongId = NSNumber()
+    var currentSongId: String = ""
     var currentIndex = 0
     var isAdd = true
     private override init(frame: CGRect) {
@@ -57,6 +57,8 @@ class MusicPlayerView: UIView {
         let pan = UIPanGestureRecognizer(target: self, action: #selector(panGestureAtion(_:)))
         addGestureRecognizer(pan)
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(nextBtnAction(_:)), name: AVPlayerItemDidPlayToEndTimeNotification, object: nil)
+        player.currentItem?.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.New, context: nil)
+        remoteMusic()
     }
     
     @IBAction private func backBtnAction(sender: UIButton) {
@@ -159,27 +161,19 @@ extension MusicPlayerView {
         info[MPMediaItemPropertyTitle] = model.name
         info[MPMediaItemPropertyArtist] = model.singerName
         info[MPMediaItemPropertyAlbumTitle] = model.albumName
-        if model.picArray.count != 0 {
-            let picDict = model.picArray[0] as! NSDictionary
-            let picUrl = picDict["picUrl"] as! String
-            let imageCache = SDImageCache.sharedImageCache().imageFromDiskCacheForKey(picUrl)
-            if imageCache == nil {
-                let manager = SDWebImageDownloader.sharedDownloader()
-                manager.downloadImageWithURL(NSURL(string: picUrl), options: SDWebImageDownloaderOptions.LowPriority, progress: nil, completed: { (image, data, error, finish) in
-                    if image != nil {
-                        let artwork = MPMediaItemArtwork(image: image)
-                        info[MPMediaItemPropertyArtwork] = artwork
-                    }
-                })
-            } else {
-                let artwork = MPMediaItemArtwork(image: imageCache)
-                info[MPMediaItemPropertyArtwork] = artwork
-            }
-        }
         info[MPNowPlayingInfoPropertyPlaybackRate] = NSNumber(float: player.rate)
         info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = NSNumber(double: CMTimeGetSeconds(player.currentItem!.currentTime()))
         info[MPMediaItemPropertyPlaybackDuration] = NSNumber(double: CMTimeGetSeconds(player.currentItem!.duration))
         MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = info
+        UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
+    }
+    
+    func remoteMusic() {
+        let remote = MPRemoteCommandCenter()
+        remote.pauseCommand.addTarget(self, action: #selector(playerBtnAction(_:)))
+        remote.playCommand.addTarget(self, action: #selector(playerBtnAction(_:)))
+        remote.previousTrackCommand.addTarget(self, action: #selector(lastBtnAction(_:)))
+        remote.nextTrackCommand.addTarget(self, action: #selector(nextBtnAction(_:)))
     }
     
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
@@ -188,10 +182,7 @@ extension MusicPlayerView {
             case .Unknown:
                print("unknow")
             case .ReadyToPlay:
-                player.play()
-                playStatus = true
-                playBtn.selected = playStatus
-                topPlayerBtn.selected = playStatus
+                
                 updateNowPlayerInfoCenter()
             case .Failed:
                 print("failed")
@@ -205,11 +196,11 @@ extension MusicPlayerView {
 
 extension MusicPlayerView {
     private func creatAudioPlayer() {
-        if currentSongId == model.songId {
+        if currentSongId == "\(model.songId)"{
             playerBtnAction(UIButton())
             return
         }
-        currentSongId = model.songId
+        currentSongId = "\(model.songId)"
         musicTitleLab.text = model.name
         if model.picArray.count != 0 {
             let picDict = model.picArray[0] as! NSDictionary
@@ -229,12 +220,14 @@ extension MusicPlayerView {
             let value = currentTime/totalTime as Float64
             self.slider.value = Float(value)
         }
-        
         player.currentItem?.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.New, context: nil)
-        
+        player.play()
+        playStatus = true
+        playBtn.selected = playStatus
+        topPlayerBtn.selected = playStatus
     }
     
-    @IBAction private func playerBtnAction(sender: UIButton) {
+    @objc @IBAction private func playerBtnAction(sender: UIButton) {
         sender.selected = playStatus
         if playStatus {
             player.pause()
@@ -249,9 +242,9 @@ extension MusicPlayerView {
         updateNowPlayerInfoCenter()
     }
     
-    @IBAction private func lastBtnAction(sender: UIButton) {
+    @objc @IBAction private func lastBtnAction(sender: UIButton) {
         isAdd = false
-
+        player.currentItem?.removeObserver(self, forKeyPath: "status")
         currentIndex -= 1
         if currentIndex == -1 {
             currentIndex = songIdArray.count - 1
@@ -259,8 +252,9 @@ extension MusicPlayerView {
         getMusic()
     }
     
-    @IBAction func nextBtnAction(sender: UIButton) {
+    @objc @IBAction func nextBtnAction(sender: UIButton) {
         isAdd = true
+        player.currentItem?.removeObserver(self, forKeyPath: "status")
         currentIndex += 1
         if currentIndex == songIdArray.count {
             currentIndex = 0
@@ -286,6 +280,7 @@ extension MusicPlayerView {
 extension MusicPlayerView {
     
     func loadMusicWith(idArray: NSArray, index: NSInteger) {
+        player.currentItem?.removeObserver(self, forKeyPath: "status")
         songIdArray = idArray
         currentIndex = index
         getMusic()

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -30,12 +30,12 @@
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
             <subviews>
                 <view alpha="0.0" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="o0I-7l-LC5">
-                    <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                    <rect key="frame" x="0.0" y="-1000" width="320" height="1768"/>
                     <subviews>
                         <visualEffectView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kOc-rt-ooE">
-                            <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                            <rect key="frame" x="0.0" y="0.0" width="320" height="1768"/>
                             <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="XcZ-U4-Jwq">
-                                <rect key="frame" x="0.0" y="0.0" width="320" height="568"/>
+                                <rect key="frame" x="0.0" y="0.0" width="320" height="1768"/>
                                 <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                             </view>
                             <blurEffect style="dark"/>
@@ -238,9 +238,9 @@
                 <constraint firstAttribute="trailing" secondItem="9fP-Lq-PZp" secondAttribute="trailing" constant="20" id="Fte-ZW-cVn"/>
                 <constraint firstItem="o0I-7l-LC5" firstAttribute="leading" secondItem="6tX-CU-jxh" secondAttribute="leading" id="ISM-vd-oKC"/>
                 <constraint firstItem="9fP-Lq-PZp" firstAttribute="leading" secondItem="6tX-CU-jxh" secondAttribute="leading" constant="20" id="ZAH-SB-2Vj"/>
-                <constraint firstItem="o0I-7l-LC5" firstAttribute="top" secondItem="6tX-CU-jxh" secondAttribute="top" id="cAE-Ia-NXY"/>
+                <constraint firstItem="o0I-7l-LC5" firstAttribute="top" secondItem="6tX-CU-jxh" secondAttribute="top" constant="-1000" id="cAE-Ia-NXY"/>
                 <constraint firstItem="9fP-Lq-PZp" firstAttribute="top" secondItem="6tX-CU-jxh" secondAttribute="top" constant="40" id="hea-YR-e1r"/>
-                <constraint firstAttribute="bottom" secondItem="o0I-7l-LC5" secondAttribute="bottom" id="itC-pT-xdg"/>
+                <constraint firstAttribute="bottom" secondItem="o0I-7l-LC5" secondAttribute="bottom" constant="-200" id="itC-pT-xdg"/>
                 <constraint firstAttribute="bottom" secondItem="9fP-Lq-PZp" secondAttribute="bottom" constant="40" id="wvT-71-BUM"/>
             </constraints>
             <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
