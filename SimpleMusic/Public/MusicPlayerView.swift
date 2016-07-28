@@ -190,21 +190,6 @@ extension MusicPlayerView {
         remote.nextTrackCommand.addTarget(self, action: #selector(nextBtnAction(_:)))
     }
     
-    func didPauseCommand(sender: MPRemoteCommandEvent) {
-        playerBtnAction(UIButton())
-    }
-    
-    func didPlayCommand(sender: MPRemoteCommandEvent) {
-        playerBtnAction(UIButton())
-    }
-    
-    func didPreviousTrackCommand(sender: MPRemoteCommandEvent) {
-        lastBtnAction(UIButton())
-    }
-    
-    func didNextTrackCommand(sender: MPRemoteCommandEvent) {
-        nextBtnAction(UIButton())
-    }
 }
 
 
