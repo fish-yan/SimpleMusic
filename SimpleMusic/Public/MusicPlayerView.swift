@@ -168,14 +168,6 @@ extension MusicPlayerView {
         UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
     }
     
-    func remoteMusic() {
-        let remote = MPRemoteCommandCenter()
-        remote.pauseCommand.addTarget(self, action: #selector(playerBtnAction(_:)))
-        remote.playCommand.addTarget(self, action: #selector(playerBtnAction(_:)))
-        remote.previousTrackCommand.addTarget(self, action: #selector(lastBtnAction(_:)))
-        remote.nextTrackCommand.addTarget(self, action: #selector(nextBtnAction(_:)))
-    }
-    
     override func observeValueForKeyPath(keyPath: String?, ofObject object: AnyObject?, change: [String : AnyObject]?, context: UnsafeMutablePointer<Void>) {
         if keyPath == "status" {
             switch player.status {
@@ -188,6 +180,30 @@ extension MusicPlayerView {
                 print("failed")
             }
         }
+    }
+    
+    func remoteMusic() {
+        let remote = MPRemoteCommandCenter.sharedCommandCenter()
+        remote.pauseCommand.addTarget(self, action: #selector(playerBtnAction(_:)))
+        remote.playCommand.addTarget(self, action: #selector(playerBtnAction(_:)))
+        remote.previousTrackCommand.addTarget(self, action: #selector(lastBtnAction(_:)))
+        remote.nextTrackCommand.addTarget(self, action: #selector(nextBtnAction(_:)))
+    }
+    
+    func didPauseCommand(sender: MPRemoteCommandEvent) {
+        playerBtnAction(UIButton())
+    }
+    
+    func didPlayCommand(sender: MPRemoteCommandEvent) {
+        playerBtnAction(UIButton())
+    }
+    
+    func didPreviousTrackCommand(sender: MPRemoteCommandEvent) {
+        lastBtnAction(UIButton())
+    }
+    
+    func didNextTrackCommand(sender: MPRemoteCommandEvent) {
+        nextBtnAction(UIButton())
     }
 }
 
@@ -206,6 +222,10 @@ extension MusicPlayerView {
             let picDict = model.picArray[0] as! NSDictionary
             let picUrl = picDict["picUrl"] as! String
             musicImageView.sd_setImageWithURL(NSURL(string: picUrl)!)
+        }
+        
+        if player.currentItem != nil {
+            player.currentItem?.removeObserver(self, forKeyPath: "status")
         }
         
         let playerItem = AVPlayerItem(URL: NSURL(string: model.songUrl)!)
@@ -239,12 +259,12 @@ extension MusicPlayerView {
         
         playBtn.selected = playStatus
         topPlayerBtn.selected = playStatus
-        updateNowPlayerInfoCenter()
+//        updateNowPlayerInfoCenter()
     }
     
     @objc @IBAction private func lastBtnAction(sender: UIButton) {
         isAdd = false
-        player.currentItem?.removeObserver(self, forKeyPath: "status")
+//        player.currentItem?.removeObserver(self, forKeyPath: "status")
         currentIndex -= 1
         if currentIndex == -1 {
             currentIndex = songIdArray.count - 1
@@ -254,7 +274,7 @@ extension MusicPlayerView {
     
     @objc @IBAction func nextBtnAction(sender: UIButton) {
         isAdd = true
-        player.currentItem?.removeObserver(self, forKeyPath: "status")
+//        player.currentItem?.removeObserver(self, forKeyPath: "status")
         currentIndex += 1
         if currentIndex == songIdArray.count {
             currentIndex = 0
@@ -270,7 +290,7 @@ extension MusicPlayerView {
                 self.player.play()
             })
         }
-        updateNowPlayerInfoCenter()
+//        updateNowPlayerInfoCenter()
     }
     
 }
@@ -280,7 +300,6 @@ extension MusicPlayerView {
 extension MusicPlayerView {
     
     func loadMusicWith(idArray: NSArray, index: NSInteger) {
-        player.currentItem?.removeObserver(self, forKeyPath: "status")
         songIdArray = idArray
         currentIndex = index
         getMusic()
