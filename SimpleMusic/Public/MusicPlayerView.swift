@@ -35,6 +35,7 @@ class MusicPlayerView: UIView {
     var songIdArray = NSArray()
     var currentSongId: String = ""
     var currentIndex = 0
+    var currentImage: UIImage!
     var isAdd = true
     private override init(frame: CGRect) {
         super.init(frame: frame)
@@ -174,8 +175,7 @@ extension MusicPlayerView {
             case .Unknown:
                print("unknow")
             case .ReadyToPlay:
-                
-                updateNowPlayerInfoCenter()
+                configurePlayerStatus()
             case .Failed:
                 print("failed")
             }
@@ -202,19 +202,36 @@ extension MusicPlayerView {
             return
         }
         currentSongId = "\(model.songId)"
-        musicTitleLab.text = model.name
-        if model.picArray.count != 0 {
-            let picDict = model.picArray[0] as! NSDictionary
-            let picUrl = picDict["picUrl"] as! String
-            musicImageView.sd_setImageWithURL(NSURL(string: picUrl)!)
-        }
+        
         
         if player.currentItem != nil {
             player.currentItem?.removeObserver(self, forKeyPath: "status")
+            player.replaceCurrentItemWithPlayerItem(nil)
         }
         
         let playerItem = AVPlayerItem(URL: NSURL(string: model.songUrl)!)
         player.replaceCurrentItemWithPlayerItem(playerItem)
+        
+        player.currentItem?.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.New, context: nil)
+        player.play()
+        playStatus = true
+        playBtn.selected = playStatus
+        topPlayerBtn.selected = playStatus
+    }
+    
+    private func configurePlayerStatus() {
+        musicTitleLab.text = model.name
+        if model.picArray.count != 0 {
+            let picDict = model.picArray[0] as! NSDictionary
+            let picUrl = picDict["picUrl"] as! String
+            musicImageView.sd_setImageWithURL(NSURL(string: picUrl)!, completed: { (image, error, type, url) in
+                if image != nil {
+                    self.currentImage = image
+                    self.updateNowPlayerInfoCenter()
+                }
+            })
+        }
+        
         player.addPeriodicTimeObserverForInterval(CMTimeMake(1, 1), queue: dispatch_get_main_queue()) { (time) in
             let currentTime = CMTimeGetSeconds(time)
             let totalTime = CMTimeGetSeconds(self.player.currentItem!.duration)
@@ -225,11 +242,6 @@ extension MusicPlayerView {
             let value = currentTime/totalTime as Float64
             self.slider.value = Float(value)
         }
-        player.currentItem?.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.New, context: nil)
-        player.play()
-        playStatus = true
-        playBtn.selected = playStatus
-        topPlayerBtn.selected = playStatus
     }
     
     @objc @IBAction private func playerBtnAction(sender: UIButton) {
@@ -244,7 +256,7 @@ extension MusicPlayerView {
         
         playBtn.selected = playStatus
         topPlayerBtn.selected = playStatus
-//        updateNowPlayerInfoCenter()
+        updateNowPlayerInfoCenter()
     }
     
     @objc @IBAction private func lastBtnAction(sender: UIButton) {
