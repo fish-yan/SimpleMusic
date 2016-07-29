@@ -12,7 +12,7 @@ import MediaPlayer
 import AVFoundation
 
 class MusicPlayerView: UIView {
-    static let sharePlayer = MusicPlayerView(frame: CGRect(x: 0, y: kScreenHeight - 84, width: kScreenWidth, height: kScreenHeight))
+    static let sharePlayer = MusicPlayerView(frame: CGRect(x: 20, y: kScreenHeight - 44, width: kScreenWidth - 40, height: kScreenHeight - 88))
     var player = AVPlayer()
     
     @IBOutlet weak var forgroundView: UIView!
@@ -70,25 +70,24 @@ class MusicPlayerView: UIView {
     @objc private func tapGestureAction(sender: UITapGestureRecognizer) {
         showMusicPlayerView()
     }
+    
     var isDown = false
     @objc private func panGestureAtion(sender: UIPanGestureRecognizer) {
         let translateY = sender.translationInView(self).y
         var y = CGRectGetMinY(frame)
-        y = y < 0 ? 0 : y
-        y = y > kScreenHeight - 84 ? kScreenHeight - 84 : y
+        y = y < 44 ? 44 : y
+        y = y > kScreenHeight - 44 ? kScreenHeight - 44 : y
         switch sender.state {
         case .Changed:
-            frame = CGRect(x: 0, y: y + translateY, width: kScreenWidth, height: kScreenHeight)
-            print((kScreenHeight - 84 - y) / (kScreenHeight - 84))
-            backView.alpha = (kScreenHeight - 84 - y) / (kScreenHeight - 84)
+            frame = CGRect(x: 20, y: y + translateY, width: kScreenWidth - 40, height: kScreenHeight - 88)
+            backView.alpha = (kScreenHeight - 44 - y) / (kScreenHeight - 44)
             if translateY > 0 {
                 isDown = true
             } else{
                 isDown = false
             }
         case .Ended, .Cancelled:
-            print("\(y)--\(isDown)")
-            if isDown && y > 150 || !isDown && y > kScreenHeight - 84 - 150 {
+            if isDown && y > 150 || !isDown && y > kScreenHeight - 44 - 150 {
                 
                 hiddenMusicPlayerView()
             } else {
@@ -105,14 +104,13 @@ class MusicPlayerView: UIView {
         imageTop.constant = 0
         imageWidth.constant = kScreenWidth - 40
         imageHeight.constant = kScreenHeight - 80
-        backBtn.hidden = false
-        topPlayerBtn.hidden = true
-        musicTitleLab.textAlignment = .Center
-        var transform = CATransform3DIdentity
-        transform = CATransform3DTranslate(transform, 0, -kScreenHeight + 84, 0)
+        
         UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 5, options: .AllowUserInteraction, animations: {
+            self.musicTitleLab.textAlignment = .Center
             self.backView.alpha = 1
-            self.frame = CGRect(x: 0, y: 0, width: kScreenWidth, height: kScreenHeight)
+            self.backBtn.alpha = 1
+            self.topPlayerBtn.alpha = 0
+            self.frame = CGRect(x: 20, y: 44, width: kScreenWidth - 40, height: kScreenHeight - 88)
             self.layoutIfNeeded()
         }) { (finish) in
         }
@@ -123,12 +121,13 @@ class MusicPlayerView: UIView {
         imageTop.constant = 5
         imageWidth.constant = 34
         imageHeight.constant = 34
-        backBtn.hidden = true
-        topPlayerBtn.hidden = false
-        musicTitleLab.textAlignment = .Left
+        
         UIView.animateWithDuration(0.3, delay: 0, usingSpringWithDamping: 0.6, initialSpringVelocity: 5, options: .AllowUserInteraction, animations: {
+            self.musicTitleLab.textAlignment = .Left
             self.backView.alpha = 0
-            self.frame = CGRect(x: 0, y: kScreenHeight - 84, width: kScreenWidth, height: kScreenHeight)
+            self.backBtn.alpha = 0
+            self.topPlayerBtn.alpha = 1
+            self.frame = CGRect(x: 20, y: kScreenHeight - 44, width: kScreenWidth - 40, height: kScreenHeight - 88)
             self.layoutIfNeeded()
         }) { (finish) in
             
@@ -157,11 +156,35 @@ class MusicPlayerView: UIView {
 }
 
 extension MusicPlayerView {
+    
+    private func configurePlayerStatus() {
+        musicTitleLab.text = model.name
+        musicImageView.sd_setImageWithURL(NSURL(string: model.picUrl!)!, completed: { (image, error, type, url) in
+            if image != nil {
+                self.currentImage = image
+                self.updateNowPlayerInfoCenter()
+            }
+        })
+        
+        
+        player.addPeriodicTimeObserverForInterval(CMTimeMake(1, 1), queue: dispatch_get_main_queue()) { (time) in
+            let currentTime = CMTimeGetSeconds(time)
+            let totalTime = CMTimeGetSeconds(self.player.currentItem!.duration)
+            self.beginTimeLab.text = "\(Int(currentTime / 60)):\(Int(currentTime % 60))"
+            if totalTime > 0.0 {
+                self.endTimeLab.text = "\(Int(totalTime / 60)):\(Int(totalTime % 60))"
+            }
+            let value = currentTime/totalTime as Float64
+            self.slider.value = Float(value)
+        }
+    }
+    
     func updateNowPlayerInfoCenter() {
         var info = [String : AnyObject]()
         info[MPMediaItemPropertyTitle] = model.name
         info[MPMediaItemPropertyArtist] = model.singerName
         info[MPMediaItemPropertyAlbumTitle] = model.albumName
+        info[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(image: currentImage)
         info[MPNowPlayingInfoPropertyPlaybackRate] = NSNumber(float: player.rate)
         info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = NSNumber(double: CMTimeGetSeconds(player.currentItem!.currentTime()))
         info[MPMediaItemPropertyPlaybackDuration] = NSNumber(double: CMTimeGetSeconds(player.currentItem!.duration))
@@ -192,7 +215,6 @@ extension MusicPlayerView {
     
 }
 
-
 // MARK: - PlayerAction
 
 extension MusicPlayerView {
@@ -202,14 +224,11 @@ extension MusicPlayerView {
             return
         }
         currentSongId = "\(model.songId)"
-        
-        
         if player.currentItem != nil {
             player.currentItem?.removeObserver(self, forKeyPath: "status")
             player.replaceCurrentItemWithPlayerItem(nil)
         }
-        
-        let playerItem = AVPlayerItem(URL: NSURL(string: model.songUrl)!)
+        let playerItem = AVPlayerItem(URL: NSURL(string: model.songUrl!)!)
         player.replaceCurrentItemWithPlayerItem(playerItem)
         
         player.currentItem?.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.New, context: nil)
@@ -219,33 +238,7 @@ extension MusicPlayerView {
         topPlayerBtn.selected = playStatus
     }
     
-    private func configurePlayerStatus() {
-        musicTitleLab.text = model.name
-        if model.picArray.count != 0 {
-            let picDict = model.picArray[0] as! NSDictionary
-            let picUrl = picDict["picUrl"] as! String
-            musicImageView.sd_setImageWithURL(NSURL(string: picUrl)!, completed: { (image, error, type, url) in
-                if image != nil {
-                    self.currentImage = image
-                    self.updateNowPlayerInfoCenter()
-                }
-            })
-        }
-        
-        player.addPeriodicTimeObserverForInterval(CMTimeMake(1, 1), queue: dispatch_get_main_queue()) { (time) in
-            let currentTime = CMTimeGetSeconds(time)
-            let totalTime = CMTimeGetSeconds(self.player.currentItem!.duration)
-            self.beginTimeLab.text = "\(Int(currentTime / 60)):\(Int(currentTime % 60))"
-            if totalTime > 0.0 {
-                self.endTimeLab.text = "\(Int(totalTime / 60)):\(Int(totalTime % 60))"
-            }
-            let value = currentTime/totalTime as Float64
-            self.slider.value = Float(value)
-        }
-    }
-    
     @objc @IBAction private func playerBtnAction(sender: UIButton) {
-        sender.selected = playStatus
         if playStatus {
             player.pause()
             playStatus = false
@@ -261,7 +254,6 @@ extension MusicPlayerView {
     
     @objc @IBAction private func lastBtnAction(sender: UIButton) {
         isAdd = false
-//        player.currentItem?.removeObserver(self, forKeyPath: "status")
         currentIndex -= 1
         if currentIndex == -1 {
             currentIndex = songIdArray.count - 1
@@ -271,7 +263,6 @@ extension MusicPlayerView {
     
     @objc @IBAction func nextBtnAction(sender: UIButton) {
         isAdd = true
-//        player.currentItem?.removeObserver(self, forKeyPath: "status")
         currentIndex += 1
         if currentIndex == songIdArray.count {
             currentIndex = 0
@@ -287,7 +278,7 @@ extension MusicPlayerView {
                 self.player.play()
             })
         }
-//        updateNowPlayerInfoCenter()
+        updateNowPlayerInfoCenter()
     }
     
 }
@@ -309,6 +300,8 @@ extension MusicPlayerView {
 extension MusicPlayerView {
     
     private func getMusic() {
+        let userDefault = NSUserDefaults.standardUserDefaults()
+        userDefault.setValue(["idArray":songIdArray, "index":currentIndex], forKey: "currentSong")
         HttpHelper.shareHelper.loadData(withView: self, url: "http://api.dongting.com/song/song/\(songIdArray[currentIndex])", parameters: nil) { (response) in
             self.model = SingleMusicModel()
             let dict = response!["data"] as! NSDictionary
@@ -320,7 +313,7 @@ extension MusicPlayerView {
                     self.lastBtnAction(UIButton())
                 }
             }
-            self.getPicture(self.model.songId, singerId: self.model.singerId)
+            self.getPicture(self.model.songId!, singerId: self.model.singerId!)
         }
     }
     
@@ -332,9 +325,14 @@ extension MusicPlayerView {
             }
             let dataDict = data[0]
             if dataDict["picUrls"] is NSArray {
-                self.model.picArray = dataDict["picUrls"] as! NSArray
-                self.creatAudioPlayer()
+                let picArray = dataDict["picUrls"] as! NSArray
+                if picArray.count != 0 {
+                    let picDict =  picArray[0] as! NSDictionary
+                    self.model.picUrl = picDict["picUrl"] as? String
+                }
+                
             }
+            self.creatAudioPlayer()
         }
     }
     

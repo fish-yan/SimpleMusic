@@ -11,12 +11,18 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
+    static let shareDelegate = AppDelegate()
     var window: UIWindow?
 
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        let userDefault = NSUserDefaults.standardUserDefaults()
+        let current = userDefault.objectForKey("currentSong")
+        if current != nil {
+            let currentSong = current as! NSDictionary
+            MusicPlayerView.sharePlayer.loadMusicWith(currentSong["idArray"] as! NSArray, index: currentSong["index"] as! NSInteger)
+        }
         let session = AVAudioSession.sharedInstance()
         
         try! session.setCategory(AVAudioSessionCategoryPlayback)
@@ -78,7 +84,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             dict[NSLocalizedDescriptionKey] = "Failed to initialize the application's saved data"
             dict[NSLocalizedFailureReasonErrorKey] = failureReason
 
-            dict[NSUnderlyingErrorKey] = error as NSError
+            dict[NSUnderlyingErrorKey] = error as! NSError
             let wrappedError = NSError(domain: "YOUR_ERROR_DOMAIN", code: 9999, userInfo: dict)
             // Replace this with code to handle the error appropriately.
             // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
@@ -96,6 +102,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         managedObjectContext.persistentStoreCoordinator = coordinator
         return managedObjectContext
     }()
+    
+    lazy var backgroundOnjectContext: NSManagedObjectContext = {
+        let coordinator = self.persistentStoreCoordinator
+        var backgroundOnjectContext = NSManagedObjectContext(concurrencyType: .PrivateQueueConcurrencyType)
+        backgroundOnjectContext.persistentStoreCoordinator = coordinator
+        // 大数据同步，后台进程同步到主进程
+        NSNotificationCenter.defaultCenter().addObserver(self.managedObjectContext, selector: #selector(self.managedObjectContext.mergeChangesFromContextDidSaveNotification(_:)), name: NSManagedObjectContextDidSaveNotification, object: backgroundOnjectContext)
+        return backgroundOnjectContext
+    }()
 
     // MARK: - Core Data Saving support
 
@@ -103,6 +118,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if managedObjectContext.hasChanges {
             do {
                 try managedObjectContext.save()
+            } catch {
+                // Replace this implementation with code to handle the error appropriately.
+                // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.
+                let nserror = error as NSError
+                NSLog("Unresolved error \(nserror), \(nserror.userInfo)")
+                abort()
+            }
+        }
+    }
+    
+    func saveBackgroundContext () {
+        if backgroundOnjectContext.hasChanges {
+            do {
+                try backgroundOnjectContext.save()
             } catch {
                 // Replace this implementation with code to handle the error appropriately.
                 // abort() causes the application to generate a crash log and terminate. You should not use this function in a shipping application, although it may be useful during development.

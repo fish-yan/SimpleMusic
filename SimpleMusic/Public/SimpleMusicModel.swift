@@ -1,22 +1,14 @@
 //
-//  SingleMusicModel.swift
+//  SimpleMusicModel.swift
 //  SimpleMusic
 //
-//  Created by 薛焱 on 16/7/21.
+//  Created by 薛焱 on 16/7/29.
 //  Copyright © 2016年 薛焱. All rights reserved.
 //
 
 import UIKit
 
-class SingleMusicModel: NSObject {
-    var albumName: String?
-    var songUrl: String?
-    var name: String?
-    var singerName: String?
-    var songId: NSNumber?
-    var singerId: NSNumber?
-    var picUrl: String?
-    
+class SimpleMusicModel: BaseModel {
     override func setValue(value: AnyObject?, forUndefinedKey key: String) {
         
         if key == "urlList" {

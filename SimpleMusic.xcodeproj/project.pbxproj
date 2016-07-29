@@ -10,6 +10,9 @@
 		3E3DC643C38ED08EA0D129B8 /* libPods-SimpleMusic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B194E35260F485978950C17 /* libPods-SimpleMusic.a */; };
 		930C5A1C1D464F0D00EA444F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 930C5A1B1D464F0D00EA444F /* Main.storyboard */; };
 		930C5A1E1D464F1C00EA444F /* MusicPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930C5A1D1D464F1C00EA444F /* MusicPlayerView.xib */; };
+		930DC9C51D4AF053000EF30B /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930DC9C41D4AF053000EF30B /* BaseModel.swift */; };
+		930DC9C71D4AF08D000EF30B /* SimpleMusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930DC9C61D4AF08D000EF30B /* SimpleMusicModel.swift */; };
+		930DC9C91D4AF0B1000EF30B /* SimpleMusicModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930DC9C81D4AF0B1000EF30B /* SimpleMusicModel+CoreDataProperties.swift */; };
 		9310EF411D2CD3F700776910 /* MusicSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9310EF401D2CD3F700776910 /* MusicSearchCell.swift */; };
 		9310EF431D2CDBB700776910 /* MusicListReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9310EF421D2CDBB700776910 /* MusicListReusableView.swift */; };
 		9310EF451D2CE11B00776910 /* MusicPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9310EF441D2CE11B00776910 /* MusicPlayerView.swift */; };
@@ -56,6 +59,9 @@
 		7B194E35260F485978950C17 /* libPods-SimpleMusic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SimpleMusic.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		930C5A1B1D464F0D00EA444F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		930C5A1D1D464F1C00EA444F /* MusicPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicPlayerView.xib; sourceTree = "<group>"; };
+		930DC9C41D4AF053000EF30B /* BaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
+		930DC9C61D4AF08D000EF30B /* SimpleMusicModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleMusicModel.swift; sourceTree = "<group>"; };
+		930DC9C81D4AF0B1000EF30B /* SimpleMusicModel+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SimpleMusicModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9310EF401D2CD3F700776910 /* MusicSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicSearchCell.swift; sourceTree = "<group>"; };
 		9310EF421D2CDBB700776910 /* MusicListReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicListReusableView.swift; sourceTree = "<group>"; };
 		9310EF441D2CE11B00776910 /* MusicPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayerView.swift; sourceTree = "<group>"; };
@@ -282,6 +288,9 @@
 				930C5A1D1D464F1C00EA444F /* MusicPlayerView.xib */,
 				9310EF441D2CE11B00776910 /* MusicPlayerView.swift */,
 				936E2D411D40C07700C08134 /* SingleMusicModel.swift */,
+				930DC9C61D4AF08D000EF30B /* SimpleMusicModel.swift */,
+				930DC9C81D4AF0B1000EF30B /* SimpleMusicModel+CoreDataProperties.swift */,
+				930DC9C41D4AF053000EF30B /* BaseModel.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -492,6 +501,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				930DC9C51D4AF053000EF30B /* BaseModel.swift in Sources */,
 				933A28081D2556BC007541EB /* SimpleMusic.xcdatamodeld in Sources */,
 				9310EF411D2CD3F700776910 /* MusicSearchCell.swift in Sources */,
 				9310EF431D2CDBB700776910 /* MusicListReusableView.swift in Sources */,
@@ -506,7 +516,9 @@
 				939F8D331D2B2AE0008BD9D6 /* RootViewController.swift in Sources */,
 				93153CB51D3F15F500899571 /* MusicModel.swift in Sources */,
 				933564241D3346A900A8F0B3 /* MusicTypeReusableView.swift in Sources */,
+				930DC9C91D4AF0B1000EF30B /* SimpleMusicModel+CoreDataProperties.swift in Sources */,
 				9310EF451D2CE11B00776910 /* MusicPlayerView.swift in Sources */,
+				930DC9C71D4AF08D000EF30B /* SimpleMusicModel.swift in Sources */,
 				939F8D4D1D2B2BAE008BD9D6 /* MusicSearchViewController.swift in Sources */,
 				933564201D33464900A8F0B3 /* MusicTypeViewController.swift in Sources */,
 			);

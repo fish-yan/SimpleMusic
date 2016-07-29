@@ -1,22 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G31" minimumToolsVersion="Automatic">
-    <entity name="MusicModel" representedClassName="MusicModel" syncable="YES">
-        <attribute name="album_num" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="albumId" optional="YES" attributeType="Transformable" syncable="YES"/>
+    <entity name="SimpleMusicModel" representedClassName=".SimpleMusicModel" syncable="YES">
         <attribute name="albumName" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="picUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="searchType" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="singerId" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="singerId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="singerName" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="song_num" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="songId" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="songListId" optional="YES" attributeType="Transformable" syncable="YES"/>
-        <attribute name="songs" optional="YES" attributeType="Transformable" syncable="YES"/>
+        <attribute name="songId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
         <attribute name="songUrl" optional="YES" attributeType="String" syncable="YES"/>
-        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="MusicModel" positionX="-63" positionY="-18" width="128" height="255"/>
+        <element name="SimpleMusicModel" positionX="-63" positionY="-18" width="128" height="150"/>
     </elements>
 </model>
