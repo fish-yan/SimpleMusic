@@ -11,15 +11,14 @@ import CoreData
 
 class BaseModel: NSManagedObject {
     static let shareModel = BaseModel()
+
     // 插入
-    func insertWith(dict: NSDictionary) {
-        let name = NSStringFromClass(self.classForCoder)
-        var temp = getModelWith(dict["songId"] as! NSNumber)
+    func insertWith(model: SimpleMusicModel) {
+        var temp = getModelWith(model.songId!)
         if temp as! NSObject == false {
-            temp = NSEntityDescription.insertNewObjectForEntityForName(name, inManagedObjectContext: AppDelegate.shareDelegate.managedObjectContext)
+            temp = NSEntityDescription.insertNewObjectForEntityForName("SimpleMusicModel", inManagedObjectContext: AppDelegate.shareDelegate.managedObjectContext)
         }
         let model = temp as! BaseModel
-        model.setValuesForKeysWithDictionary(dict as! [String : AnyObject])
         AppDelegate.shareDelegate.saveContext()
     }
     
@@ -29,7 +28,7 @@ class BaseModel: NSManagedObject {
         let backgroundContext = AppDelegate.shareDelegate.backgroundOnjectContext
         backgroundContext.performBlock { 
             let request = NSFetchRequest()
-            let entity = NSEntityDescription.entityForName(name, inManagedObjectContext: backgroundContext)
+            let entity = NSEntityDescription.entityForName("SimpleMusicModel", inManagedObjectContext: backgroundContext)
             request.entity = entity
             do {
                 let resultArray = try backgroundContext.executeFetchRequest(request)
@@ -62,7 +61,7 @@ class BaseModel: NSManagedObject {
         let name = NSStringFromClass(self.classForCoder)
         let context = AppDelegate.shareDelegate.managedObjectContext
         let request = NSFetchRequest()
-        let entity = NSEntityDescription.entityForName(name, inManagedObjectContext: context)
+        let entity = NSEntityDescription.entityForName("SimpleMusicModel", inManagedObjectContext: context)
         request.entity = entity
         let predicate = NSPredicate(format: "songId == %@", songId)
         request.predicate = predicate

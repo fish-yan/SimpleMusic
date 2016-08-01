@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import CoreData
 
 class HttpHelper: NSObject {
     static let shareHelper = HttpHelper()
@@ -44,9 +45,24 @@ class HttpHelper: NSObject {
         task?.resume()
     }
     
+    func downloadMusic(withUrl urlStr: String, progress: ((NSProgress) -> Void), success:((NSURL?) -> Void)) {
+        let request = NSURLRequest(URL: NSURL(string: urlStr)!)
+        let task = manager.downloadTaskWithRequest(request, progress: { (AFNProgress) in
+            progress(AFNProgress)
+            }, destination: { (url, response) -> NSURL in
+                let documentURL = try? NSFileManager.defaultManager().URLForDirectory(.DocumentationDirectory, inDomain: NSSearchPathDomainMask.UserDomainMask, appropriateForURL: nil, create: false)
+                return (documentURL?.URLByAppendingPathComponent(response.suggestedFilename!))!
+        }) { (response, filePath, error) in
+            print(filePath)
+            success(filePath)
+        }
+        task.resume()
+    }
+    
     class func getColorWith(rgbValue:Int) -> UIColor {
         let color = UIColor(red: (CGFloat((rgbValue & 0xFF0000) >> 16))/255.0, green: (CGFloat((rgbValue & 0xFF00) >> 8))/255.0, blue: (CGFloat(rgbValue & 0xFF))/255.0, alpha: 1)
         return color
     }
     
 }
+

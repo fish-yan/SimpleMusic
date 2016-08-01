@@ -11,17 +11,29 @@ import UIKit
 class MineViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segment: UISegmentedControl!
+    var allDataArray = NSArray()
     var dataArray = NSMutableArray()
-    var idArray = NSMutableArray()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        SimpleMusicModel.getAllDataWith { (array) in
+            self.allDataArray = array
+            self.tableView.reloadData()
+        }
+        
         // Do any additional setup after loading the view.
     }
 
     @IBAction func segmentAction(sender: UISegmentedControl) {
-        
+        dataArray = NSMutableArray()
+        for element in allDataArray {
+            let model = element as! SimpleMusicModel
+            if model.downType == 1 && sender.selectedSegmentIndex == 1 {
+                dataArray.addObject(model)
+            } else if model.downType == 2 && sender.selectedSegmentIndex == 0 {
+                dataArray.addObject(model)
+            }
+        }
+        tableView.reloadData()
     }
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -56,7 +68,7 @@ extension MineViewController: UITableViewDataSource {
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("MusicSearchCell", forIndexPath: indexPath) as! MusicSearchCell
-        let songModel = dataArray[indexPath.row] as! MusicModel
+        let songModel = dataArray[indexPath.row] as! SimpleMusicModel
         cell.indexLab.text = "\(indexPath.row + 1)"
         cell.titleLab.text = songModel.name
         let album = (songModel.albumName != nil) ? songModel.albumName : ""
@@ -80,6 +92,11 @@ extension MineViewController: UITableViewDelegate {
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
+        let idArray = NSMutableArray()
+        for element in dataArray {
+            let model = element as! SimpleMusicModel
+            idArray.addObject(model.songId!)
+        }
         MusicPlayerView.sharePlayer.loadMusicWith(idArray, index: indexPath.row)
     }
     

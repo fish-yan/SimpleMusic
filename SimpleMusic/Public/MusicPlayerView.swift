@@ -15,6 +15,8 @@ class MusicPlayerView: UIView {
     static let sharePlayer = MusicPlayerView(frame: CGRect(x: 20, y: kScreenHeight - 44, width: kScreenWidth - 40, height: kScreenHeight - 88))
     var player = AVPlayer()
     
+    @IBOutlet weak var collectBtn: UIButton!
+    @IBOutlet weak var downloadBtn: UIButton!
     @IBOutlet weak var forgroundView: UIView!
     @IBOutlet weak var endTimeLab: UILabel!
     @IBOutlet weak var beginTimeLab: UILabel!
@@ -228,9 +230,17 @@ extension MusicPlayerView {
             player.currentItem?.removeObserver(self, forKeyPath: "status")
             player.replaceCurrentItemWithPlayerItem(nil)
         }
-        let playerItem = AVPlayerItem(URL: NSURL(string: model.songUrl!)!)
-        player.replaceCurrentItemWithPlayerItem(playerItem)
-        
+        let temp = SimpleMusicModel.getModelWith(model.songId!)
+        if temp as! NSObject == false {
+            let playerItem = AVPlayerItem(URL: NSURL(string: model.songUrl!)!)
+            player.replaceCurrentItemWithPlayerItem(playerItem)
+            
+        } else {
+            let simpleModel = temp as! SimpleMusicModel
+            let asset = AVAsset(URL: NSURL(fileURLWithPath: simpleModel.filePath!))
+            let playerItem = AVPlayerItem(asset: asset)
+            player.replaceCurrentItemWithPlayerItem(playerItem)
+        }
         player.currentItem?.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.New, context: nil)
         player.play()
         playStatus = true
@@ -281,6 +291,21 @@ extension MusicPlayerView {
         updateNowPlayerInfoCenter()
     }
     
+    @IBAction func downBtnAction(sender: UIButton) {
+        HttpHelper.shareHelper.downloadMusic(withUrl: model.songUrl!, progress: { (progress) in
+            
+            }) { (filePath) in
+                self.model.downType = 2
+                self.model.filePath = "\(filePath)"
+                SimpleMusicModel.insertWith(self.model)
+        }
+    }
+    
+    @IBAction func collecBtnAction(sender: UIButton) {
+        self.model.downType = 1
+        SimpleMusicModel.insertWith(self.model)
+    }
+    
 }
 
 // MARK: - Public
@@ -292,7 +317,6 @@ extension MusicPlayerView {
         currentIndex = index
         getMusic()
     }
-    
 }
 
 // MARK: - Request

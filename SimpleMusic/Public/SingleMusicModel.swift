@@ -16,7 +16,8 @@ class SingleMusicModel: NSObject {
     var songId: NSNumber?
     var singerId: NSNumber?
     var picUrl: String?
-    
+    var downType: NSNumber?
+    var filePath: String?
     override func setValue(value: AnyObject?, forUndefinedKey key: String) {
         
         if key == "urlList" {

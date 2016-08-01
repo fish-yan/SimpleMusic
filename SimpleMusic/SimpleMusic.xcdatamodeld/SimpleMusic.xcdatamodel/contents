@@ -2,6 +2,8 @@
 <model userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="10174" systemVersion="15G31" minimumToolsVersion="Automatic">
     <entity name="SimpleMusicModel" representedClassName=".SimpleMusicModel" syncable="YES">
         <attribute name="albumName" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="downType" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
+        <attribute name="filePath" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="name" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="picUrl" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="singerId" optional="YES" attributeType="Integer 64" defaultValueString="0" syncable="YES"/>
@@ -10,6 +12,6 @@
         <attribute name="songUrl" optional="YES" attributeType="String" syncable="YES"/>
     </entity>
     <elements>
-        <element name="SimpleMusicModel" positionX="-63" positionY="-18" width="128" height="150"/>
+        <element name="SimpleMusicModel" positionX="-63" positionY="-18" width="128" height="180"/>
     </elements>
 </model>

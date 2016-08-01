@@ -10,9 +10,6 @@
 		3E3DC643C38ED08EA0D129B8 /* libPods-SimpleMusic.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B194E35260F485978950C17 /* libPods-SimpleMusic.a */; };
 		930C5A1C1D464F0D00EA444F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 930C5A1B1D464F0D00EA444F /* Main.storyboard */; };
 		930C5A1E1D464F1C00EA444F /* MusicPlayerView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 930C5A1D1D464F1C00EA444F /* MusicPlayerView.xib */; };
-		930DC9C51D4AF053000EF30B /* BaseModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930DC9C41D4AF053000EF30B /* BaseModel.swift */; };
-		930DC9C71D4AF08D000EF30B /* SimpleMusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930DC9C61D4AF08D000EF30B /* SimpleMusicModel.swift */; };
-		930DC9C91D4AF0B1000EF30B /* SimpleMusicModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 930DC9C81D4AF0B1000EF30B /* SimpleMusicModel+CoreDataProperties.swift */; };
 		9310EF411D2CD3F700776910 /* MusicSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9310EF401D2CD3F700776910 /* MusicSearchCell.swift */; };
 		9310EF431D2CDBB700776910 /* MusicListReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9310EF421D2CDBB700776910 /* MusicListReusableView.swift */; };
 		9310EF451D2CE11B00776910 /* MusicPlayerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9310EF441D2CE11B00776910 /* MusicPlayerView.swift */; };
@@ -27,7 +24,9 @@
 		933A280D1D2556BC007541EB /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 933A280B1D2556BC007541EB /* LaunchScreen.storyboard */; };
 		933A28181D2556BD007541EB /* SimpleMusicTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933A28171D2556BD007541EB /* SimpleMusicTests.swift */; };
 		933A28231D2556BD007541EB /* SimpleMusicUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 933A28221D2556BD007541EB /* SimpleMusicUITests.swift */; };
-		936E2D421D40C07700C08134 /* SingleMusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 936E2D411D40C07700C08134 /* SingleMusicModel.swift */; };
+		93420CE21D4F3D4600C591EC /* SingleMusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93420CE11D4F3D4600C591EC /* SingleMusicModel.swift */; };
+		93420CE51D4F432300C591EC /* SimpleMusicModel+CoreDataProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93420CE31D4F432300C591EC /* SimpleMusicModel+CoreDataProperties.swift */; };
+		93420CE61D4F432300C591EC /* SimpleMusicModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 93420CE41D4F432300C591EC /* SimpleMusicModel.swift */; };
 		939F8D331D2B2AE0008BD9D6 /* RootViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F8D321D2B2AE0008BD9D6 /* RootViewController.swift */; };
 		939F8D4B1D2B2BAE008BD9D6 /* MineViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F8D3E1D2B2BAE008BD9D6 /* MineViewController.swift */; };
 		939F8D4C1D2B2BAE008BD9D6 /* MusicListViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 939F8D431D2B2BAE008BD9D6 /* MusicListViewController.swift */; };
@@ -59,9 +58,6 @@
 		7B194E35260F485978950C17 /* libPods-SimpleMusic.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-SimpleMusic.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		930C5A1B1D464F0D00EA444F /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 		930C5A1D1D464F1C00EA444F /* MusicPlayerView.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = MusicPlayerView.xib; sourceTree = "<group>"; };
-		930DC9C41D4AF053000EF30B /* BaseModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BaseModel.swift; sourceTree = "<group>"; };
-		930DC9C61D4AF08D000EF30B /* SimpleMusicModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleMusicModel.swift; sourceTree = "<group>"; };
-		930DC9C81D4AF0B1000EF30B /* SimpleMusicModel+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SimpleMusicModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
 		9310EF401D2CD3F700776910 /* MusicSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicSearchCell.swift; sourceTree = "<group>"; };
 		9310EF421D2CDBB700776910 /* MusicListReusableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicListReusableView.swift; sourceTree = "<group>"; };
 		9310EF441D2CE11B00776910 /* MusicPlayerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicPlayerView.swift; sourceTree = "<group>"; };
@@ -82,7 +78,9 @@
 		933A281E1D2556BD007541EB /* SimpleMusicUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = SimpleMusicUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		933A28221D2556BD007541EB /* SimpleMusicUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimpleMusicUITests.swift; sourceTree = "<group>"; };
 		933A28241D2556BD007541EB /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		936E2D411D40C07700C08134 /* SingleMusicModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleMusicModel.swift; sourceTree = "<group>"; };
+		93420CE11D4F3D4600C591EC /* SingleMusicModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SingleMusicModel.swift; sourceTree = "<group>"; };
+		93420CE31D4F432300C591EC /* SimpleMusicModel+CoreDataProperties.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SimpleMusicModel+CoreDataProperties.swift"; sourceTree = "<group>"; };
+		93420CE41D4F432300C591EC /* SimpleMusicModel.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SimpleMusicModel.swift; sourceTree = "<group>"; };
 		939F8D321D2B2AE0008BD9D6 /* RootViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RootViewController.swift; sourceTree = "<group>"; };
 		939F8D3E1D2B2BAE008BD9D6 /* MineViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MineViewController.swift; sourceTree = "<group>"; };
 		939F8D431D2B2BAE008BD9D6 /* MusicListViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicListViewController.swift; sourceTree = "<group>"; };
@@ -285,12 +283,11 @@
 			isa = PBXGroup;
 			children = (
 				93EDAAC91D2B565800BF9211 /* HttpHelper.swift */,
+				93420CE11D4F3D4600C591EC /* SingleMusicModel.swift */,
 				930C5A1D1D464F1C00EA444F /* MusicPlayerView.xib */,
 				9310EF441D2CE11B00776910 /* MusicPlayerView.swift */,
-				936E2D411D40C07700C08134 /* SingleMusicModel.swift */,
-				930DC9C61D4AF08D000EF30B /* SimpleMusicModel.swift */,
-				930DC9C81D4AF0B1000EF30B /* SimpleMusicModel+CoreDataProperties.swift */,
-				930DC9C41D4AF053000EF30B /* BaseModel.swift */,
+				93420CE31D4F432300C591EC /* SimpleMusicModel+CoreDataProperties.swift */,
+				93420CE41D4F432300C591EC /* SimpleMusicModel.swift */,
 			);
 			path = Public;
 			sourceTree = "<group>";
@@ -501,9 +498,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				930DC9C51D4AF053000EF30B /* BaseModel.swift in Sources */,
+				93420CE61D4F432300C591EC /* SimpleMusicModel.swift in Sources */,
 				933A28081D2556BC007541EB /* SimpleMusic.xcdatamodeld in Sources */,
 				9310EF411D2CD3F700776910 /* MusicSearchCell.swift in Sources */,
+				93420CE51D4F432300C591EC /* SimpleMusicModel+CoreDataProperties.swift in Sources */,
 				9310EF431D2CDBB700776910 /* MusicListReusableView.swift in Sources */,
 				933A28001D2556BC007541EB /* AppDelegate.swift in Sources */,
 				93EDAAC71D2B4BA800BF9211 /* MusicListCell.swift in Sources */,
@@ -512,13 +510,11 @@
 				939F8D4B1D2B2BAE008BD9D6 /* MineViewController.swift in Sources */,
 				933564221D33469600A8F0B3 /* MusicTypeCell.swift in Sources */,
 				939F8D4C1D2B2BAE008BD9D6 /* MusicListViewController.swift in Sources */,
-				936E2D421D40C07700C08134 /* SingleMusicModel.swift in Sources */,
 				939F8D331D2B2AE0008BD9D6 /* RootViewController.swift in Sources */,
 				93153CB51D3F15F500899571 /* MusicModel.swift in Sources */,
 				933564241D3346A900A8F0B3 /* MusicTypeReusableView.swift in Sources */,
-				930DC9C91D4AF0B1000EF30B /* SimpleMusicModel+CoreDataProperties.swift in Sources */,
 				9310EF451D2CE11B00776910 /* MusicPlayerView.swift in Sources */,
-				930DC9C71D4AF08D000EF30B /* SimpleMusicModel.swift in Sources */,
+				93420CE21D4F3D4600C591EC /* SingleMusicModel.swift in Sources */,
 				939F8D4D1D2B2BAE008BD9D6 /* MusicSearchViewController.swift in Sources */,
 				933564201D33464900A8F0B3 /* MusicTypeViewController.swift in Sources */,
 			);
@@ -661,7 +657,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SimpleMusic/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xueyan.SimpleMusic;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xueyan.SimpleMusic1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/SimpleMusic/SimpleMusic.h";
@@ -677,7 +673,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SimpleMusic/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xueyan.SimpleMusic;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xueyan.SimpleMusic1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/SimpleMusic/SimpleMusic.h";

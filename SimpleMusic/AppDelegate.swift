@@ -23,12 +23,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             let currentSong = current as! NSDictionary
             MusicPlayerView.sharePlayer.loadMusicWith(currentSong["idArray"] as! NSArray, index: currentSong["index"] as! NSInteger)
         }
+        let localArray = NSMutableArray()
+        userDefault.setValue(localArray, forKey: "localMusic")
         let session = AVAudioSession.sharedInstance()
         
         try! session.setCategory(AVAudioSessionCategoryPlayback)
         
         try! session.setActive(true)
         
+        print(NSHomeDirectory())
         return true
     }
 
