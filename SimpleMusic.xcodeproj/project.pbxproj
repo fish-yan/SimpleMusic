@@ -380,7 +380,7 @@
 				TargetAttributes = {
 					933A27FB1D2556BC007541EB = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = ZQ3C4D99B8;
+						DevelopmentTeam = UZT23M6T33;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -657,7 +657,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SimpleMusic/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xueyan.SimpleMusic1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xueyan.SimpleMusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/SimpleMusic/SimpleMusic.h";
@@ -673,7 +673,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SimpleMusic/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xueyan.SimpleMusic1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xueyan.SimpleMusic;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/SimpleMusic/SimpleMusic.h";

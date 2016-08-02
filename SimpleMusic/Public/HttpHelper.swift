@@ -12,8 +12,11 @@ import CoreData
 class HttpHelper: NSObject {
     static let shareHelper = HttpHelper()
     var manager = AFHTTPSessionManager()
+    var downManager: AFURLSessionManager!
     override init() {
         manager.responseSerializer.acceptableContentTypes = NSSet(objects: "application/json", "text/plain", "text/html") as? Set<String>
+        let configure = NSURLSessionConfiguration.defaultSessionConfiguration()
+        downManager = AFURLSessionManager(sessionConfiguration: configure)
     }
     
     func loadData(withView view: UIView?, url: String, parameters: AnyObject?, success: ((response: AnyObject?) -> Void)) {
@@ -45,17 +48,33 @@ class HttpHelper: NSObject {
         task?.resume()
     }
     
-    func downloadMusic(withUrl urlStr: String, progress: ((NSProgress) -> Void), success:((NSURL?) -> Void)) {
+    func downloadMusic(withUrl urlStr: String, progress: ((NSProgress) -> Void), success:((String) -> Void)) {
         let request = NSURLRequest(URL: NSURL(string: urlStr)!)
-        let task = manager.downloadTaskWithRequest(request, progress: { (AFNProgress) in
+        let task = downManager.downloadTaskWithRequest(request, progress: { (AFNProgress) in
             progress(AFNProgress)
             }, destination: { (url, response) -> NSURL in
-                let documentURL = try? NSFileManager.defaultManager().URLForDirectory(.DocumentationDirectory, inDomain: NSSearchPathDomainMask.UserDomainMask, appropriateForURL: nil, create: false)
-                return (documentURL?.URLByAppendingPathComponent(response.suggestedFilename!))!
-        }) { (response, filePath, error) in
-            print(filePath)
-            success(filePath)
+                let caches = NSSearchPathForDirectoriesInDomains(.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true).last
+                let path1 = NSString(string: caches!)
+                let path2 = path1.stringByAppendingPathComponent(response.suggestedFilename!)
+//                let documentURL = try? NSFileManager.defaultManager().URLForDirectory(.DocumentationDirectory, inDomain: NSSearchPathDomainMask.UserDomainMask, appropriateForURL: nil, create: false)
+                return NSURL(fileURLWithPath: path2)
+            }) { (response, filePath, error) in
+                if error == nil {
+                    success(response.suggestedFilename!)
+                    print(filePath!.path)
+                }
+                
         }
+//        let task = manager.downloadTaskWithRequest(request, progress: { (AFNProgress) in
+//            progress(AFNProgress)
+//            }, destination: { (url, response) -> NSURL in
+//                
+//                let documentURL = try? NSFileManager.defaultManager().URLForDirectory(.DocumentationDirectory, inDomain: NSSearchPathDomainMask.UserDomainMask, appropriateForURL: nil, create: false)
+//                return (documentURL?.URLByAppendingPathComponent(response.suggestedFilename!))!
+//        }) { (response, filePath, error) in
+//            print(filePath)
+//            
+//        }
         task.resume()
     }
     

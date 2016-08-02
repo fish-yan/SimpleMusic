@@ -15,14 +15,26 @@ class MineViewController: UIViewController {
     var dataArray = NSMutableArray()
     override func viewDidLoad() {
         super.viewDidLoad()
-        SimpleMusicModel.getAllDataWith { (array) in
-            self.allDataArray = array
-            self.tableView.reloadData()
-        }
+        getData()
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(getData), name: "refresh", object: nil)
         
         // Do any additional setup after loading the view.
     }
-
+    
+    func getData() {
+        self.dataArray = NSMutableArray()
+        SimpleMusicModel.getAllDataWith { (array) in
+            self.allDataArray = array
+            for element in self.allDataArray {
+                let model = element as! SimpleMusicModel
+                if model.downType == 2 {
+                    self.dataArray.addObject(model)
+                }
+            }
+            self.tableView.reloadData()
+        }
+    }
+    
     @IBAction func segmentAction(sender: UISegmentedControl) {
         dataArray = NSMutableArray()
         for element in allDataArray {
@@ -97,7 +109,7 @@ extension MineViewController: UITableViewDelegate {
             let model = element as! SimpleMusicModel
             idArray.addObject(model.songId!)
         }
-        MusicPlayerView.sharePlayer.loadMusicWith(idArray, index: indexPath.row)
+        MusicPlayerView.sharePlayer.loadLocalMusicWidth(dataArray, index: indexPath.row)
     }
     
 }

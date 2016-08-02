@@ -35,10 +35,13 @@ class MusicPlayerView: UIView {
     var senderVC: RootViewController!
     var model = SingleMusicModel()
     var songIdArray = NSArray()
+    var modelArray = NSArray()
+    var isFromDownload = false
     var currentSongId: String = ""
     var currentIndex = 0
     var currentImage: UIImage!
     var isAdd = true
+    var dowmloadType = NSNumber(integer: 0)
     private override init(frame: CGRect) {
         super.init(frame: frame)
         loadNib()
@@ -167,7 +170,22 @@ extension MusicPlayerView {
                 self.updateNowPlayerInfoCenter()
             }
         })
-        
+        if dowmloadType == 0 {
+            collectBtn.setImage(UIImage(named: "unselect"), forState: .Normal)
+            downloadBtn.setImage(UIImage(named: "unDownload"), forState: .Normal)
+            collectBtn.userInteractionEnabled = true
+            downloadBtn.userInteractionEnabled = true
+        } else if dowmloadType == 1 {
+            collectBtn.userInteractionEnabled = true
+            downloadBtn.userInteractionEnabled = true
+            collectBtn.setImage(UIImage(named: "selected"), forState: .Normal)
+            downloadBtn.setImage(UIImage(named: "unDownload"), forState: .Normal)
+        } else {
+            collectBtn.userInteractionEnabled = false
+            downloadBtn.userInteractionEnabled = false
+            collectBtn.setImage(UIImage(named: "unselect"), forState: .Normal)
+            downloadBtn.setImage(UIImage(named: "download"), forState: .Normal)
+        }
         
         player.addPeriodicTimeObserverForInterval(CMTimeMake(1, 1), queue: dispatch_get_main_queue()) { (time) in
             let currentTime = CMTimeGetSeconds(time)
@@ -234,12 +252,23 @@ extension MusicPlayerView {
         if temp as! NSObject == false {
             let playerItem = AVPlayerItem(URL: NSURL(string: model.songUrl!)!)
             player.replaceCurrentItemWithPlayerItem(playerItem)
-            
+            dowmloadType = 0
         } else {
+            
             let simpleModel = temp as! SimpleMusicModel
-            let asset = AVAsset(URL: NSURL(fileURLWithPath: simpleModel.filePath!))
-            let playerItem = AVPlayerItem(asset: asset)
-            player.replaceCurrentItemWithPlayerItem(playerItem)
+            dowmloadType = simpleModel.downType!
+            if dowmloadType == 1 {
+                let playerItem = AVPlayerItem(URL: NSURL(string: model.songUrl!)!)
+                player.replaceCurrentItemWithPlayerItem(playerItem)
+            } else {
+                let caches = NSSearchPathForDirectoriesInDomains(.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true).last
+                let path1 = NSString(string: caches!)
+                let path2 = path1.stringByAppendingPathComponent(simpleModel.filePath!)
+                let asset = AVAsset(URL: NSURL(fileURLWithPath: path2))
+                let playerItem = AVPlayerItem(asset: asset)
+                player.replaceCurrentItemWithPlayerItem(playerItem)
+            }
+            
         }
         player.currentItem?.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.New, context: nil)
         player.play()
@@ -268,7 +297,11 @@ extension MusicPlayerView {
         if currentIndex == -1 {
             currentIndex = songIdArray.count - 1
         }
-        getMusic()
+        if isFromDownload {
+            getMusicFromLoacal()
+        } else {
+            getMusic()
+        }
     }
     
     @objc @IBAction func nextBtnAction(sender: UIButton) {
@@ -277,7 +310,12 @@ extension MusicPlayerView {
         if currentIndex == songIdArray.count {
             currentIndex = 0
         }
-        getMusic()
+        if isFromDownload {
+            getMusicFromLoacal()
+        } else {
+            getMusic()
+        }
+        
     }
     
     @IBAction func sliderAction(sender: UISlider) {
@@ -294,16 +332,21 @@ extension MusicPlayerView {
     @IBAction func downBtnAction(sender: UIButton) {
         HttpHelper.shareHelper.downloadMusic(withUrl: model.songUrl!, progress: { (progress) in
             
-            }) { (filePath) in
+            }) { (suggestName) in
                 self.model.downType = 2
-                self.model.filePath = "\(filePath)"
+                self.model.filePath = suggestName
                 SimpleMusicModel.insertWith(self.model)
+                self.collectBtn.setImage(UIImage(named: "unselect"), forState: .Normal)
+                self.downloadBtn.setImage(UIImage(named: "download"), forState: .Normal)
+                NSNotificationCenter.defaultCenter().postNotificationName("refresh", object: nil)
         }
     }
     
     @IBAction func collecBtnAction(sender: UIButton) {
         self.model.downType = 1
         SimpleMusicModel.insertWith(self.model)
+        collectBtn.setImage(UIImage(named: "selected"), forState: .Normal)
+        NSNotificationCenter.defaultCenter().postNotificationName("refresh", object: nil)
     }
     
 }
@@ -313,15 +356,35 @@ extension MusicPlayerView {
 extension MusicPlayerView {
     
     func loadMusicWith(idArray: NSArray, index: NSInteger) {
+        isFromDownload = false
         songIdArray = idArray
         currentIndex = index
         getMusic()
+    }
+    
+    func loadLocalMusicWidth(mArray: NSArray, index: NSInteger) {
+        isFromDownload = true
+        modelArray = mArray
+        currentIndex = index
+        getMusicFromLoacal()
     }
 }
 
 // MARK: - Request
 
 extension MusicPlayerView {
+    
+    func getMusicFromLoacal() {
+        let smodel = modelArray[currentIndex] as! SimpleMusicModel
+        model.albumName = smodel.albumName
+        model.name = smodel.name
+        model.picUrl = smodel.picUrl
+        model.singerId = smodel.singerId
+        model.singerName = smodel.singerName
+        model.songId = smodel.songId
+        model.songUrl = smodel.songUrl
+        creatAudioPlayer()
+    }
     
     private func getMusic() {
         let userDefault = NSUserDefaults.standardUserDefaults()
