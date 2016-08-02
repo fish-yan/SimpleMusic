@@ -11,7 +11,7 @@ import UIKit
 class MineViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var segment: UISegmentedControl!
-    var allDataArray = NSArray()
+    var allDataArray = NSMutableArray()
     var dataArray = NSMutableArray()
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,7 +24,7 @@ class MineViewController: UIViewController {
     func getData() {
         self.dataArray = NSMutableArray()
         SimpleMusicModel.getAllDataWith { (array) in
-            self.allDataArray = array
+            self.allDataArray = NSMutableArray(array: array)
             for element in self.allDataArray {
                 let model = element as! SimpleMusicModel
                 if model.downType == 2 {
@@ -86,6 +86,32 @@ extension MineViewController: UITableViewDataSource {
         let album = (songModel.albumName != nil) ? songModel.albumName : ""
         cell.singerNameLab.text = songModel.singerName! + "  " + album!
         return cell;
+    }
+    
+    func tableView(tableView: UITableView, canEditRowAtIndexPath indexPath: NSIndexPath) -> Bool {
+        return true
+    }
+    
+    func tableView(tableView: UITableView, commitEditingStyle editingStyle: UITableViewCellEditingStyle, forRowAtIndexPath indexPath: NSIndexPath) {
+        if editingStyle == .Delete {
+            let removeModel = dataArray[indexPath.row] as! SimpleMusicModel
+            if removeModel.downType == 2 {
+                let fileManager = NSFileManager.defaultManager()
+                let caches = NSSearchPathForDirectoriesInDomains(.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true).last
+                let path1 = NSString(string: caches!)
+                let path2 = path1.stringByAppendingPathComponent(removeModel.filePath!)
+                do {
+                    try fileManager.removeItemAtPath(path2)
+                } catch {
+                    print("delete failed")
+                }
+                
+            }
+            allDataArray.removeObject(removeModel)
+            SimpleMusicModel.removeWith(removeModel)
+            dataArray.removeObjectAtIndex(indexPath.row)
+            tableView.deleteRowsAtIndexPaths([indexPath], withRowAnimation: .Automatic)
+        }
     }
     
 }

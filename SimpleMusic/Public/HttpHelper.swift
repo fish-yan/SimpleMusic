@@ -56,7 +56,6 @@ class HttpHelper: NSObject {
                 let caches = NSSearchPathForDirectoriesInDomains(.CachesDirectory, NSSearchPathDomainMask.UserDomainMask, true).last
                 let path1 = NSString(string: caches!)
                 let path2 = path1.stringByAppendingPathComponent(response.suggestedFilename!)
-//                let documentURL = try? NSFileManager.defaultManager().URLForDirectory(.DocumentationDirectory, inDomain: NSSearchPathDomainMask.UserDomainMask, appropriateForURL: nil, create: false)
                 return NSURL(fileURLWithPath: path2)
             }) { (response, filePath, error) in
                 if error == nil {
