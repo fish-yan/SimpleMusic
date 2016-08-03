@@ -58,6 +58,9 @@ class SimpleMusicModel: NSManagedObject {
     // 删除
     class func removeWith(model: SimpleMusicModel) {
         AppDelegate.shareDelegate.managedObjectContext.deleteObject(model)
+        
+        AppDelegate.shareDelegate.saveContext()
+        
     }
     
     class func getModelWith(songId: NSNumber) -> AnyObject {
