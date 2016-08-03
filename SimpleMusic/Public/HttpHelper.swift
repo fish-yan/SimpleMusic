@@ -20,8 +20,11 @@ class HttpHelper: NSObject {
     }
     
     func loadData(withView view: UIView?, url: String, parameters: AnyObject?, success: ((response: AnyObject?) -> Void)) {
+        if view != nil {
+            MBProgressHUD.showHUDAddedTo((view?.superview)!, animated: true)
+        }
         let task = manager.GET(url, parameters: parameters, progress: nil, success: { (dataTask, response) in
-            print("\(url) \n \(response)")
+//            print("\(url) \n \(response)")
 //            let code = response!["code"] as! NSNumber
 //            if code.boolValue {
                 success(response: response!)
@@ -29,6 +32,7 @@ class HttpHelper: NSObject {
                     let tableView = view as! UITableView
                     tableView.reloadData()
                     if (tableView.mj_header != nil) {
+                        
                         tableView.mj_header.endRefreshing()
                         tableView.mj_footer.endRefreshing()
                     }
@@ -41,6 +45,9 @@ class HttpHelper: NSObject {
                         collectionView.mj_footer.endRefreshing()
                     }
                 }
+            if view != nil {
+                MBProgressHUD.hideHUDForView((view?.superview)!, animated: true)
+            }
 //            }
         }) { (dataTask, error) in
             print(error.description)
@@ -64,16 +71,6 @@ class HttpHelper: NSObject {
                 }
                 
         }
-//        let task = manager.downloadTaskWithRequest(request, progress: { (AFNProgress) in
-//            progress(AFNProgress)
-//            }, destination: { (url, response) -> NSURL in
-//                
-//                let documentURL = try? NSFileManager.defaultManager().URLForDirectory(.DocumentationDirectory, inDomain: NSSearchPathDomainMask.UserDomainMask, appropriateForURL: nil, create: false)
-//                return (documentURL?.URLByAppendingPathComponent(response.suggestedFilename!))!
-//        }) { (response, filePath, error) in
-//            print(filePath)
-//            
-//        }
         task.resume()
     }
     

@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="64" width="320" height="504"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="osT-5X-1pT">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" bounces="NO" scrollEnabled="NO" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="osT-5X-1pT">
                                 <rect key="frame" x="0.0" y="0.0" width="320" height="460"/>
                                 <subviews>
                                     <containerView opaque="NO" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eNr-gv-n8P">
@@ -40,6 +40,7 @@
                                         </connections>
                                     </containerView>
                                 </subviews>
+                                <gestureRecognizers/>
                                 <constraints>
                                     <constraint firstItem="Ju5-J8-kmX" firstAttribute="top" secondItem="osT-5X-1pT" secondAttribute="top" id="0UG-se-fm0"/>
                                     <constraint firstItem="T8S-qZ-eKV" firstAttribute="height" secondItem="osT-5X-1pT" secondAttribute="height" id="IQU-Ok-QHa"/>
@@ -64,6 +65,7 @@
                             </scrollView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="osT-5X-1pT" secondAttribute="bottom" id="8j0-VD-sXj"/>
                             <constraint firstAttribute="trailing" secondItem="osT-5X-1pT" secondAttribute="trailing" id="b78-R4-9f2"/>
@@ -193,7 +195,7 @@
                                     <action selector="segmentAction:" destination="I8m-28-IKK" eventType="valueChanged" id="Dm6-p2-dfr"/>
                                 </connections>
                             </segmentedControl>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MQO-GO-f0s">
+                            <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" allowsSelectionDuringEditing="YES" allowsMultipleSelectionDuringEditing="YES" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="MQO-GO-f0s">
                                 <rect key="frame" x="0.0" y="50" width="320" height="410"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <prototypes>
@@ -277,6 +279,7 @@
                             </tableView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <gestureRecognizers/>
                         <constraints>
                             <constraint firstAttribute="trailing" secondItem="hLC-fx-5xc" secondAttribute="trailing" constant="20" id="3RX-N5-Rmd"/>
                             <constraint firstItem="hLC-fx-5xc" firstAttribute="top" secondItem="ix5-pI-CAX" secondAttribute="bottom" constant="10" id="Uwh-mG-aDC"/>

@@ -389,7 +389,7 @@ extension MusicPlayerView {
     private func getMusic() {
         let userDefault = NSUserDefaults.standardUserDefaults()
         userDefault.setValue(["idArray":songIdArray, "index":currentIndex], forKey: "currentSong")
-        HttpHelper.shareHelper.loadData(withView: self, url: "http://api.dongting.com/song/song/\(songIdArray[currentIndex])", parameters: nil) { (response) in
+        HttpHelper.shareHelper.loadData(withView: nil, url: "http://api.dongting.com/song/song/\(songIdArray[currentIndex])", parameters: nil) { (response) in
             self.model = SingleMusicModel()
             let dict = response!["data"] as! NSDictionary
             self.model.setValuesForKeysWithDictionary(dict as! [String : AnyObject])
@@ -405,7 +405,7 @@ extension MusicPlayerView {
     }
     
     private func getPicture(songId: NSNumber, singerId: NSNumber) {
-        HttpHelper.shareHelper.loadData(withView: self, url: "http://so.ard.iyyin.com/s/pic", parameters: ["song_id":"\(songId)", "singerid":"\(singerId)"]) { (response) in
+        HttpHelper.shareHelper.loadData(withView: nil, url: "http://so.ard.iyyin.com/s/pic", parameters: ["song_id":"\(songId)", "singerid":"\(singerId)"]) { (response) in
             let data = response!["data"] as! NSArray
             guard data.count != 0 else {
                 return

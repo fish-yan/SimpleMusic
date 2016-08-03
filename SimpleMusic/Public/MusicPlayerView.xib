@@ -7,7 +7,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="MusicPlayerView" customModule="SimpleMusic" customModuleProvider="target">
             <connections>
-                <outlet property="backBtn" destination="hUK-vn-wkW" id="E8j-5G-tlx"/>
+                <outlet property="backBtn" destination="pBt-Sh-EeP" id="wZT-SC-g4b"/>
                 <outlet property="backView" destination="o0I-7l-LC5" id="txG-oH-DnD"/>
                 <outlet property="beginTimeLab" destination="ONg-XB-Oka" id="bNq-Qd-hpy"/>
                 <outlet property="collectBtn" destination="sJ9-3T-BOe" id="kjC-B0-KLi"/>
@@ -71,21 +71,20 @@
                         <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rqo-M6-mkR">
                             <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
                             <subviews>
-                                <button hidden="YES" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hUK-vn-wkW">
-                                    <rect key="frame" x="10" y="5" width="34" height="34"/>
+                                <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pBt-Sh-EeP">
+                                    <rect key="frame" x="5" y="5" width="34" height="34"/>
                                     <constraints>
-                                        <constraint firstAttribute="width" constant="34" id="GfE-cH-5L5"/>
-                                        <constraint firstAttribute="height" constant="34" id="mgc-K4-TE3"/>
+                                        <constraint firstAttribute="height" constant="34" id="UEE-TK-fR9"/>
+                                        <constraint firstAttribute="width" constant="34" id="Vta-G5-Khk"/>
                                     </constraints>
-                                    <state key="normal" image="back-1">
-                                        <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                    </state>
+                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    <state key="normal" image="back"/>
                                     <connections>
-                                        <action selector="backBtnAction:" destination="-1" eventType="touchUpInside" id="u26-wD-9Ld"/>
+                                        <action selector="backBtnAction:" destination="-1" eventType="touchUpInside" id="7Md-gS-dpe"/>
                                     </connections>
                                 </button>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Music..." lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="cqc-3L-r70">
-                                    <rect key="frame" x="54" y="5" width="206" height="34"/>
+                                    <rect key="frame" x="50" y="5" width="210" height="34"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="34" id="2Kq-pB-2gx"/>
                                     </constraints>
@@ -98,12 +97,18 @@
                             <gestureRecognizers/>
                             <constraints>
                                 <constraint firstAttribute="bottom" secondItem="cqc-3L-r70" secondAttribute="bottom" constant="5" id="AfD-ya-khb"/>
-                                <constraint firstItem="hUK-vn-wkW" firstAttribute="leading" secondItem="rqo-M6-mkR" secondAttribute="leading" constant="10" id="PLa-cn-B8X"/>
-                                <constraint firstItem="cqc-3L-r70" firstAttribute="leading" secondItem="hUK-vn-wkW" secondAttribute="trailing" constant="10" id="dSR-xr-rjm"/>
+                                <constraint firstItem="pBt-Sh-EeP" firstAttribute="leading" secondItem="rqo-M6-mkR" secondAttribute="leading" constant="5" id="Nz8-rh-edI"/>
+                                <constraint firstItem="cqc-3L-r70" firstAttribute="centerY" secondItem="pBt-Sh-EeP" secondAttribute="centerY" id="WZM-gJ-mjZ"/>
+                                <constraint firstItem="cqc-3L-r70" firstAttribute="leading" secondItem="rqo-M6-mkR" secondAttribute="leading" constant="50" id="aYk-ef-fUk"/>
                                 <constraint firstAttribute="trailing" secondItem="cqc-3L-r70" secondAttribute="trailing" constant="60" id="g2Y-xi-oeG"/>
                                 <constraint firstAttribute="height" constant="44" id="iQy-uP-dOM"/>
-                                <constraint firstAttribute="bottom" secondItem="hUK-vn-wkW" secondAttribute="bottom" constant="5" id="xCu-Wu-dRu"/>
+                                <constraint firstItem="pBt-Sh-EeP" firstAttribute="top" secondItem="rqo-M6-mkR" secondAttribute="top" constant="5" id="ptn-nA-vyd"/>
                             </constraints>
+                            <variation key="default">
+                                <mask key="constraints">
+                                    <exclude reference="ptn-nA-vyd"/>
+                                </mask>
+                            </variation>
                         </view>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="udt-oB-ytB">
                             <rect key="frame" x="276" y="5" width="34" height="34"/>
@@ -278,7 +283,7 @@
         </view>
     </objects>
     <resources>
-        <image name="back-1" width="11" height="20"/>
+        <image name="back" width="9" height="16"/>
         <image name="last_button_hi" width="40" height="40"/>
         <image name="next_button_hi" width="40" height="40"/>
         <image name="pause_button" width="50" height="50"/>

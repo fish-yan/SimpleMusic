@@ -5,5 +5,6 @@ target 'SimpleMusic' do
 pod 'AFNetworking'
 pod 'SDWebImage'
 pod 'MJRefresh'
+pod 'MBProgressHUD'
 end
 

@@ -18,6 +18,12 @@ class SingleMusicModel: NSObject {
     var picUrl: String?
     var downType: NSNumber?
     var filePath: String?
+    
+    override init() {
+        super.init()
+        picUrl = "http://img.sccnn.com/bimg/338/16031.jpg"
+    }
+    
     override func setValue(value: AnyObject?, forUndefinedKey key: String) {
         
         if key == "urlList" {

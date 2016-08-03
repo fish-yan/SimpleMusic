@@ -23,5 +23,5 @@ extension SimpleMusicModel {
     @NSManaged var songUrl: String?
     @NSManaged var downType: NSNumber?
     @NSManaged var filePath: String?
-
+    
 }

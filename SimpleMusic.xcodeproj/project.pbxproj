@@ -282,10 +282,10 @@
 		93EDAAC81D2B564300BF9211 /* Public */ = {
 			isa = PBXGroup;
 			children = (
-				93EDAAC91D2B565800BF9211 /* HttpHelper.swift */,
-				93420CE11D4F3D4600C591EC /* SingleMusicModel.swift */,
 				930C5A1D1D464F1C00EA444F /* MusicPlayerView.xib */,
 				9310EF441D2CE11B00776910 /* MusicPlayerView.swift */,
+				93EDAAC91D2B565800BF9211 /* HttpHelper.swift */,
+				93420CE11D4F3D4600C591EC /* SingleMusicModel.swift */,
 				93420CE31D4F432300C591EC /* SimpleMusicModel+CoreDataProperties.swift */,
 				93420CE41D4F432300C591EC /* SimpleMusicModel.swift */,
 			);
@@ -322,6 +322,7 @@
 				933A27FA1D2556BC007541EB /* Resources */,
 				2CC2E8610987761155C94911 /* [CP] Embed Pods Frameworks */,
 				EC0AC27375AEBE5ADCB8AFD9 /* [CP] Copy Pods Resources */,
+				43B28DBD6B054C582B3B83AC /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -380,7 +381,7 @@
 				TargetAttributes = {
 					933A27FB1D2556BC007541EB = {
 						CreatedOnToolsVersion = 7.3.1;
-						DevelopmentTeam = UZT23M6T33;
+						DevelopmentTeam = ZQ3C4D99B8;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -454,6 +455,21 @@
 			inputPaths = (
 			);
 			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-SimpleMusic/Pods-SimpleMusic-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		43B28DBD6B054C582B3B83AC /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
 			outputPaths = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -657,7 +673,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SimpleMusic/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xueyan.SimpleMusic;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xueyan.SimpleMusic1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/SimpleMusic/SimpleMusic.h";
@@ -673,7 +689,7 @@
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				INFOPLIST_FILE = SimpleMusic/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.xueyan.SimpleMusic;
+				PRODUCT_BUNDLE_IDENTIFIER = com.xueyan.SimpleMusic1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/SimpleMusic/SimpleMusic.h";

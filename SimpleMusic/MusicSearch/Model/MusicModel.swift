@@ -24,6 +24,11 @@ class MusicModel: NSObject {
     var albumId: NSNumber! // 专辑id
     var song_num: NSNumber! // 歌曲数量
     
+    override init() {
+        super.init()
+        picUrl = "http://img.sccnn.com/bimg/338/16031.jpg"
+    }
+    
     override func setValue(value: AnyObject?, forUndefinedKey key: String) {
         
         if key == "llList" {

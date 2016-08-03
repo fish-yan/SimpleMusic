@@ -8,7 +8,7 @@
 #import "AFNetworking.h"
 #import "UIImageView+WebCache.h"
 #import "MJRefresh.h"
-
+#import "MBProgressHUD.h"
 
 #ifndef SimpleMusic_h
 #define SimpleMusic_h
