@@ -25,12 +25,7 @@ class MineViewController: UIViewController {
         self.dataArray = NSMutableArray()
         SimpleMusicModel.getAllDataWith { (array) in
             self.allDataArray = NSMutableArray(array: array)
-            for element in self.allDataArray {
-                let model = element as! SimpleMusicModel
-                if model.downType == 2 {
-                    self.dataArray.addObject(model)
-                }
-            }
+            self.segmentAction(UISegmentedControl())
             self.tableView.reloadData()
         }
     }
@@ -39,9 +34,9 @@ class MineViewController: UIViewController {
         dataArray = NSMutableArray()
         for element in allDataArray {
             let model = element as! SimpleMusicModel
-            if model.downType == 1 && sender.selectedSegmentIndex == 1 {
+            if model.downType == 1 && segment.selectedSegmentIndex == 1 {
                 dataArray.addObject(model)
-            } else if model.downType == 2 && sender.selectedSegmentIndex == 0 {
+            } else if model.downType == 2 && segment.selectedSegmentIndex == 0 {
                 dataArray.addObject(model)
             }
         }
