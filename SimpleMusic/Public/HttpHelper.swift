@@ -24,7 +24,7 @@ class HttpHelper: NSObject {
             MBProgressHUD.showHUDAddedTo((view?.superview)!, animated: true)
         }
         let task = manager.GET(url, parameters: parameters, progress: nil, success: { (dataTask, response) in
-//            print("\(url) \n \(response)")
+            print("\(url) \n \(response)")
 //            let code = response!["code"] as! NSNumber
 //            if code.boolValue {
                 success(response: response!)

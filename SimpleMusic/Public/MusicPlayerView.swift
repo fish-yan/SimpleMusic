@@ -62,7 +62,11 @@ class MusicPlayerView: UIView {
         addGestureRecognizer(tap)
         let pan = UIPanGestureRecognizer(target: self, action: #selector(panGestureAtion(_:)))
         addGestureRecognizer(pan)
+        
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(nextBtnAction(_:)), name: AVPlayerItemDidPlayToEndTimeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(routeChange(_:)), name: AVAudioSessionRouteChangeNotification, object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self , selector: #selector(interruptionAction(_:)), name: AVAudioSessionInterruptionNotification, object: nil)
+        
         player.currentItem?.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.New, context: nil)
         remoteMusic()
     }
@@ -271,21 +275,55 @@ extension MusicPlayerView {
             
         }
         player.currentItem?.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.New, context: nil)
-        player.play()
-        playStatus = true
-        playBtn.selected = playStatus
-        topPlayerBtn.selected = playStatus
+        play()
     }
     
     @objc @IBAction private func playerBtnAction(sender: UIButton) {
         if playStatus {
-            player.pause()
-            playStatus = false
+            pause()
         } else {
-            player.play()
-            playStatus = true
+            play()
         }
-        
+    }
+    
+    @objc private func routeChange(sender: NSNotification) {
+        guard let dict = sender.userInfo else {
+            return
+        }
+        let change = dict[AVAudioSessionRouteChangeReasonKey] as? AVAudioSessionRouteChangeReason
+        if  change == .OldDeviceUnavailable {
+            let routeDescription = dict[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription
+            let portDes = routeDescription?.outputs.first
+            if portDes?.portType == "Headphones" {
+                pause()
+            }
+            
+        }
+    }
+    
+    @objc private func interruptionAction(sender: NSNotification){
+        guard let dict = sender.userInfo else {
+            return
+        }
+        let type = dict[AVAudioSessionInterruptionTypeKey] as? AVAudioSessionInterruptionType
+        if type == .Began {
+            pause()
+        } else {
+            play()
+        }
+    }
+    
+    private func play() {
+        player.play()
+        playStatus = true
+        playBtn.selected = playStatus
+        topPlayerBtn.selected = playStatus
+        updateNowPlayerInfoCenter()
+    }
+    
+    @objc private func pause() {
+        player.pause()
+        playStatus = false
         playBtn.selected = playStatus
         topPlayerBtn.selected = playStatus
         updateNowPlayerInfoCenter()
