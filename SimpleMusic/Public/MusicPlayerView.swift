@@ -14,7 +14,7 @@ import AVFoundation
 class MusicPlayerView: UIView {
     static let sharePlayer = MusicPlayerView(frame: CGRect(x: 20, y: kScreenHeight - 44, width: kScreenWidth - 40, height: kScreenHeight - 88))
     var player = AVPlayer()
-    
+    var playerItem: AVPlayerItem!
     @IBOutlet weak var collectBtn: UIButton!
     @IBOutlet weak var downloadBtn: UIButton!
     @IBOutlet weak var forgroundView: UIView!
@@ -42,6 +42,8 @@ class MusicPlayerView: UIView {
     var currentImage: UIImage!
     var isAdd = true
     var dowmloadType = NSNumber(integer: 0)
+    var currentCacheTime: Float64 = 0
+    var currentPlayTime: Float64 = 0
     private override init(frame: CGRect) {
         super.init(frame: frame)
         loadNib()
@@ -67,7 +69,6 @@ class MusicPlayerView: UIView {
         NSNotificationCenter.defaultCenter().addObserver(self, selector: #selector(routeChange(_:)), name: AVAudioSessionRouteChangeNotification, object: nil)
         NSNotificationCenter.defaultCenter().addObserver(self , selector: #selector(interruptionAction(_:)), name: AVAudioSessionInterruptionNotification, object: nil)
         
-        player.currentItem?.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.New, context: nil)
         remoteMusic()
     }
     
@@ -193,13 +194,18 @@ extension MusicPlayerView {
         
         player.addPeriodicTimeObserverForInterval(CMTimeMake(1, 1), queue: dispatch_get_main_queue()) { (time) in
             let currentTime = CMTimeGetSeconds(time)
-            let totalTime = CMTimeGetSeconds(self.player.currentItem!.duration)
+            let totalTime = CMTimeGetSeconds(self.playerItem!.duration)
             self.beginTimeLab.text = "\(Int(currentTime / 60)):\(Int(currentTime % 60))"
             if totalTime > 0.0 {
                 self.endTimeLab.text = "\(Int(totalTime / 60)):\(Int(totalTime % 60))"
             }
             let value = currentTime/totalTime as Float64
             self.slider.value = Float(value)
+            print(self.player.rate)
+            self.currentPlayTime = currentTime
+            if self.currentPlayTime > self.currentCacheTime - 1 {
+                MBProgressHUD .showHUDAddedTo(self, animated: true)
+            }
         }
     }
     
@@ -208,10 +214,12 @@ extension MusicPlayerView {
         info[MPMediaItemPropertyTitle] = model.name
         info[MPMediaItemPropertyArtist] = model.singerName
         info[MPMediaItemPropertyAlbumTitle] = model.albumName
-        info[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(image: currentImage)
+        if currentImage != nil {
+            info[MPMediaItemPropertyArtwork] = MPMediaItemArtwork(image: currentImage)
+        }
         info[MPNowPlayingInfoPropertyPlaybackRate] = NSNumber(float: player.rate)
-        info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = NSNumber(double: CMTimeGetSeconds(player.currentItem!.currentTime()))
-        info[MPMediaItemPropertyPlaybackDuration] = NSNumber(double: CMTimeGetSeconds(player.currentItem!.duration))
+        info[MPNowPlayingInfoPropertyElapsedPlaybackTime] = NSNumber(double: CMTimeGetSeconds(playerItem!.currentTime()))
+        info[MPMediaItemPropertyPlaybackDuration] = NSNumber(double: CMTimeGetSeconds(playerItem!.duration))
         MPNowPlayingInfoCenter.defaultCenter().nowPlayingInfo = info
         UIApplication.sharedApplication().beginReceivingRemoteControlEvents()
     }
@@ -225,6 +233,18 @@ extension MusicPlayerView {
                 configurePlayerStatus()
             case .Failed:
                 print("failed")
+            }
+        }
+        if keyPath == "loadedTimeRanges" {
+            let array = playerItem?.loadedTimeRanges
+            let timeRange = array?.first?.CMTimeRangeValue
+            let totalBuffer = CMTimeGetSeconds(timeRange!.start) + CMTimeGetSeconds(timeRange!.duration)
+            currentCacheTime = totalBuffer
+            if playStatus && currentCacheTime >= currentPlayTime + 5 {
+                MBProgressHUD.hideHUDForView(self, animated: true)
+                if player.rate == 0  {
+                    play()
+                }
             }
         }
     }
@@ -248,13 +268,14 @@ extension MusicPlayerView {
             return
         }
         currentSongId = "\(model.songId)"
-        if player.currentItem != nil {
-            player.currentItem?.removeObserver(self, forKeyPath: "status")
+        if playerItem != nil {
+            playerItem.removeObserver(self, forKeyPath: "status")
+            playerItem.removeObserver(self, forKeyPath: "loadedTimeRanges")
             player.replaceCurrentItemWithPlayerItem(nil)
         }
         let temp = SimpleMusicModel.getModelWith(model.songId!)
         if temp as! NSObject == false {
-            let playerItem = AVPlayerItem(URL: NSURL(string: model.songUrl!)!)
+            playerItem = AVPlayerItem(URL: NSURL(string: model.songUrl!)!)
             player.replaceCurrentItemWithPlayerItem(playerItem)
             dowmloadType = 0
         } else {
@@ -274,8 +295,12 @@ extension MusicPlayerView {
             }
             
         }
-        player.currentItem?.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.New, context: nil)
-        play()
+        playerItem.addObserver(self, forKeyPath: "status", options: NSKeyValueObservingOptions.New, context: nil)
+        playerItem.addObserver(self, forKeyPath:"loadedTimeRanges" ,options:NSKeyValueObservingOptions.New, context:nil)
+        player.play()
+        playStatus = true
+        playBtn.selected = playStatus
+        topPlayerBtn.selected = playStatus
     }
     
     @objc @IBAction private func playerBtnAction(sender: UIButton) {
@@ -284,49 +309,6 @@ extension MusicPlayerView {
         } else {
             play()
         }
-    }
-    
-    @objc private func routeChange(sender: NSNotification) {
-        guard let dict = sender.userInfo else {
-            return
-        }
-        let change = dict[AVAudioSessionRouteChangeReasonKey] as? AVAudioSessionRouteChangeReason
-        if  change == .OldDeviceUnavailable {
-            let routeDescription = dict[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription
-            let portDes = routeDescription?.outputs.first
-            if portDes?.portType == "Headphones" {
-                pause()
-            }
-            
-        }
-    }
-    
-    @objc private func interruptionAction(sender: NSNotification){
-        guard let dict = sender.userInfo else {
-            return
-        }
-        let type = dict[AVAudioSessionInterruptionTypeKey] as? AVAudioSessionInterruptionType
-        if type == .Began {
-            pause()
-        } else {
-            play()
-        }
-    }
-    
-    private func play() {
-        player.play()
-        playStatus = true
-        playBtn.selected = playStatus
-        topPlayerBtn.selected = playStatus
-        updateNowPlayerInfoCenter()
-    }
-    
-    @objc private func pause() {
-        player.pause()
-        playStatus = false
-        playBtn.selected = playStatus
-        topPlayerBtn.selected = playStatus
-        updateNowPlayerInfoCenter()
     }
     
     @objc @IBAction private func lastBtnAction(sender: UIButton) {
@@ -356,10 +338,26 @@ extension MusicPlayerView {
         
     }
     
-    @IBAction func sliderAction(sender: UISlider) {
-        let changeTime = Float64(sender.value) * CMTimeGetSeconds((player.currentItem?.duration)!)
+    private func play() {
+        player.play()
+        playStatus = true
+        playBtn.selected = playStatus
+        topPlayerBtn.selected = playStatus
+        updateNowPlayerInfoCenter()
+    }
+    
+    @objc private func pause() {
         player.pause()
-        if player.currentItem?.status == AVPlayerItemStatus.ReadyToPlay {
+        playStatus = false
+        playBtn.selected = playStatus
+        topPlayerBtn.selected = playStatus
+        updateNowPlayerInfoCenter()
+    }
+    
+    @IBAction func sliderAction(sender: UISlider) {
+        let changeTime = Float64(sender.value) * CMTimeGetSeconds((playerItem?.duration)!)
+        player.pause()
+        if playerItem.status == AVPlayerItemStatus.ReadyToPlay {
             player.seekToTime(CMTimeMake(Int64(changeTime), 1), completionHandler: { (success) in
                 self.player.play()
             })
@@ -385,6 +383,33 @@ extension MusicPlayerView {
         SimpleMusicModel.insertWith(self.model)
         collectBtn.setImage(UIImage(named: "selected"), forState: .Normal)
         NSNotificationCenter.defaultCenter().postNotificationName("refresh", object: nil)
+    }
+    
+    @objc private func routeChange(sender: NSNotification) {
+        guard let dict = sender.userInfo else {
+            return
+        }
+        let change = dict[AVAudioSessionRouteChangeReasonKey] as? AVAudioSessionRouteChangeReason
+        if  change == .OldDeviceUnavailable {
+            let routeDescription = dict[AVAudioSessionRouteChangePreviousRouteKey] as? AVAudioSessionRouteDescription
+            let portDes = routeDescription?.outputs.first
+            if portDes?.portType == "Headphones" {
+                pause()
+            }
+            
+        }
+    }
+    
+    @objc private func interruptionAction(sender: NSNotification){
+        guard let dict = sender.userInfo else {
+            return
+        }
+        let type = dict[AVAudioSessionInterruptionTypeKey] as? AVAudioSessionInterruptionType
+        if type == .Began {
+            pause()
+        } else {
+            play()
+        }
     }
     
 }

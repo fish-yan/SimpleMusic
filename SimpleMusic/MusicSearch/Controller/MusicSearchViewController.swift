@@ -49,6 +49,7 @@ class MusicSearchViewController: UIViewController {
             hiddenSegment()
             tableView.contentOffset = CGPoint(x: 0, y: 0)
             if favArray.count == 0 {
+                tableView.mj_header = nil
                 getFavouriteMusicList()
             } else {
                 dataArray = NSMutableArray(array: favArray)
@@ -199,9 +200,9 @@ extension MusicSearchViewController: UITableViewDelegate {
         return 50
     }
     
-    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 1
-    }
+//    func tableView(tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+//        return 1
+//    }
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
         tableView.deselectRowAtIndexPath(indexPath, animated: true)
@@ -244,10 +245,11 @@ extension MusicSearchViewController {
                 let model = MusicModel()
                 model.searchType = "fav"
                 model.setValuesForKeysWithDictionary(dict as! [String : AnyObject])
-                if model.songUrl!.characters.count != 0 {
-                    self.favArray.addObject(model)
-                    self.idArray.addObject(model.songId!)
+                guard (model.songUrl != nil) else {
+                    continue
                 }
+                self.favArray.addObject(model)
+                self.idArray.addObject(model.songId!)
             }
             self.dataArray = NSMutableArray(array: self.favArray)
         }
@@ -277,6 +279,7 @@ extension MusicSearchViewController {
             }
 
             self.dataArray = NSMutableArray()
+            self.idArray = NSMutableArray()
             for dict in array {
                 let model = MusicModel()
                 model.searchType = type
