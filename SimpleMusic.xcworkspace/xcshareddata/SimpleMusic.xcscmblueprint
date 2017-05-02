@@ -1,0 +1,30 @@
+{
+  "DVTSourceControlWorkspaceBlueprintPrimaryRemoteRepositoryKey" : "7B7EFD6B1847F48DC5DED57BE50240BA917FDF3B",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyRepositoryLocationsKey" : {
+
+  },
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyStatesKey" : {
+    "7B7EFD6B1847F48DC5DED57BE50240BA917FDF3B" : 9223372036854775807,
+    "2E157C4622F497980AB6FCDBE8CBC8BA967B3FD4" : 9223372036854775807
+  },
+  "DVTSourceControlWorkspaceBlueprintIdentifierKey" : "F2AA1E21-81E2-4A37-8BFD-FCF8AB06B267",
+  "DVTSourceControlWorkspaceBlueprintWorkingCopyPathsKey" : {
+    "7B7EFD6B1847F48DC5DED57BE50240BA917FDF3B" : "SimpleMusic\/",
+    "2E157C4622F497980AB6FCDBE8CBC8BA967B3FD4" : ""
+  },
+  "DVTSourceControlWorkspaceBlueprintNameKey" : "SimpleMusic",
+  "DVTSourceControlWorkspaceBlueprintVersion" : 204,
+  "DVTSourceControlWorkspaceBlueprintRelativePathToProjectKey" : "SimpleMusic.xcworkspace",
+  "DVTSourceControlWorkspaceBlueprintRemoteRepositoriesKey" : [
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/fish-yan\/test2",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "2E157C4622F497980AB6FCDBE8CBC8BA967B3FD4"
+    },
+    {
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryURLKey" : "https:\/\/github.com\/fish-yan\/SimpleMusic.git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositorySystemKey" : "com.apple.dt.Xcode.sourcecontrol.Git",
+      "DVTSourceControlWorkspaceBlueprintRemoteRepositoryIdentifierKey" : "7B7EFD6B1847F48DC5DED57BE50240BA917FDF3B"
+    }
+  ]
+}
